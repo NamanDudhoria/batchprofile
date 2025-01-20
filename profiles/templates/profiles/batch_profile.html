@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+{% for student in students %}
+<div>
+    <h3>{{ student.username }}</h3>
+    <p>{{ student.skills }}</p>
+    <p>Total Points: {{ student.total_points }}</p>
+    <a href="{% url 'student_profile' student.id %}">View Profile</a>
+</div>
+{% endfor %}

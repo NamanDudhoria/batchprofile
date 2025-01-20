@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load profile_tags %}
+
+{% block title %}Batch Profiles{% endblock %}
+
+{% block content %}
+<div class="batch-profile-container">
+    <!-- Domain Filter -->
+    <div class="domain-filter mb-4">
+        <div class="btn-group" role="group">
+            <button class="btn btn-outline-primary {% if not current_domain %}active{% endif %}"
+                    onclick="filterDomain('')">All</button>
+            <button class="btn btn-outline-primary {% if current_domain == 'analytics' %}active{% endif %}"
+                    onclick="filterDomain('analytics')">Analytics</button>
+            <button class="btn btn-outline-primary {% if current_domain == 'consulting' %}active{% endif %}"
+                    onclick="filterDomain('consulting')">Consulting</button>
+            <button class="btn btn-outline-primary {% if current_domain == 'research' %}active{% endif %}"
+                    onclick="filterDomain('research')">Research</button>
+            <button class="btn btn-outline-primary {% if current_domain == 'general' %}active{% endif %}"
+                    onclick="filterDomain('general')">General</button>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-bar mb-4">
+        <input type="text" class="form-control" id="searchInput"
+               placeholder="Search by name, skills, or domain...">
+    </div>
+
+    <!-- Student Cards Grid -->
+    <div class="row" id="studentGrid">
+        {% for student in students %}
+        <div class="col-md-4 mb-4 student-card"
+             data-domain="{{ student.domain }}"
+             data-skills="{{ student.skills|lower }}">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ student.get_full_name }}</h5>
+                    <p class="card-text">{{ student.bio|truncatewords:30 }}</p>
+                    <div class="skills-container">
+                        {% for skill in student.skills|split_skills %}
+                            <span class="badge bg-secondary">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                    <p class="mt-2">
+                        <strong>Domain:</strong> {{ student.get_domain_display }}
+                    </p>
+                    <a href="{% url 'student_detail' student.pk %}"
+                       class="btn btn-primary">View Profile</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}IIFT Economics Department{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4">Department of Economics</h1>
+                <p class="lead">Ranked 8th by IDEAS-RePEc, IIFT's Department of Economics stands as a cornerstone of academic excellence in India.</p>
+                <div class="mt-4">
+                    <a href="{% url 'batch_profile' %}" class="btn btn-primary btn-lg">View Batch Profiles</a>
+                    <a href="{% url 'hire_from_us' %}" class="btn btn-outline-primary btn-lg">Hire From Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- About Section -->
+<section id="about" class="py-5">
+    <div class="container">
+        <h2 class="section-title">About The Institute</h2>
+        <div class="row">
+            <div class="col-lg-8">
+                <p>Established in 1963 by the Govt of India, IIFT is an autonomous institution under the Ministry of Commerce & Industry dedicated to enhancing the country's foreign trade management and global business skill.</p>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-check-circle text-primary"></i> Accredited with A+ grade by NAAC</li>
+                    <li><i class="fas fa-check-circle text-primary"></i> Category-1 institution by UGC/MHRD</li>
+                    <li><i class="fas fa-check-circle text-primary"></i> MA Economics program launched in 2018</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Courses Section -->
+<section class="courses-section py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title">Our Courses</h2>
+
+        <!-- Core Courses -->
+        <div class="mb-5">
+            <h3 class="h4 mb-4">Core Courses</h3>
+            <div class="row">
+                {% for course in core_courses %}
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ course }}</h5>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Elective Courses -->
+        <div class="mb-5">
+            <h3 class="h4 mb-4">Elective Courses</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-primary text-white">
+                            International Trade
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li>Empirical Issues in Trade</li>
+                                <li>Trade and Development</li>
+                                <li>WTO and Contemporary Trade Issues</li>
+                                <li>Advanced Topics in Trade Theory</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-success text-white">
+                            Finance
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li>Investment Theory</li>
+                                <li>Banking and Financial Intermediation</li>
+                                <li>Derivatives and Risk Management</li>
+                                <li>Financial Modeling</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-info text-white">
+                            Other Courses
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li>Economics of Networks</li>
+                                <li>Applied Econometrics</li>
+                                <li>Economics of the Environment</li>
+                                <li>Labour Economics</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Faculty Section -->
+<section class="faculty-section py-5">
+    <div class="container">
+        <h2 class="section-title">Our Distinguished Faculty</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card faculty-card">
+                    <img src="{% static 'images/faculty/sahu.jpg' %}" class="card-img-top" alt="Prof. Basanta K. Sahu">
+                    <div class="card-body">
+                        <h5 class="card-title">Prof. Basanta K. Sahu</h5>
+                        <p class="card-text">Professor & Head, Economics Division (Delhi)</p>
+                        <p class="card-text"><small class="text-muted">Ph.D Economics, Sambalpur University</small></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card faculty-card">
+                    <img src="{% static 'images/faculty/bhattacharya.jpg' %}" class="card-img-top" alt="Prof. Ranajoy Bhattacharya">
+                    <div class="card-body">
+                        <h5 class="card-title">Prof. Ranajoy Bhattacharya</h5>
+                        <p class="card-text">Professor & Head, Economics Division (Kolkata)</p>
+                        <p class="card-text"><small class="text-muted">Ph.D Economics, Calcutta University</small></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card faculty-card">
+                    <img src="{% static 'images/faculty/marjit.jpg' %}" class="card-img-top" alt="Prof. Sugata Marjit">
+                    <div class="card-body">
+                        <h5 class="card-title">Prof. Sugata Marjit</h5>
+                        <p class="card-text">First Distinguished Professor</p>
+                        <p class="card-text"><small class="text-muted">Ph.D Economics, University of Rochester</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Recruitment Process -->
+<section class="recruitment-section py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title">Recruitment Process</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>1. Invitation & Scheduling</h4>
+                    <p>Aug-Dec (Phase 1)</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>2. Applications</h4>
+                    <p>Review and processing of candidate applications</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>3. Assessments</h4>
+                    <p>Jan-Apr (Phase 2)</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>4. Interviews</h4>
+                    <p>Personal interviews and evaluations</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>5. Final Offers</h4>
+                    <p>Placement offers and acceptance</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

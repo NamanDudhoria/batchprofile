@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<h1>Welcome, {{ request.user.username }}</h1>
+<h2>Your Projects</h2>
+<ul>
+    {% for project in request.user.projects.all %}
+    <li>{{ project.title }} ({{ project.category }})</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'upload_project' %}">Upload a New Project</a>

@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Hire From Us - IIFT Economics{% endblock %}
+
+{% block content %}
+<div class="hire-section py-5">
+    <div class="container">
+        <h1 class="section-title">Why Hire From Us?</h1>
+
+        <!-- Statistics Section -->
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Placement Highlights</h3>
+                        <div class="text-center">
+                            <p><strong>Highest Stipend:</strong> 1.25 LPM</p>
+                            <p><strong>Mean CTC:</strong> 13.06 LPA</p>
+                            <p><strong>Highest CTC:</strong> 24 LPA</p>
+                            <p><strong>Median CTC:</strong> 13 LPA</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Sector-wise Distribution</h3>
+                        <div class="chart-container">
+                            <canvas id="sectorChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Past Recruiters Section -->
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Past Recruiters</h3>
+                        <div class="d-flex flex-wrap justify-content-center">
+                            <img src="{% static 'images/recruiters.png' %}" alt="Past Recruiters" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Placement Records Section -->
+        <div class="row mb-5">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Mean CTC</h4>
+                        <div class="chart-container">
+                            <canvas id="meanCTCChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Median CTC</h4>
+                        <div class="chart-container">
+                            <canvas id="medianCTCChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Highest CTC</h4>
+                        <div class="chart-container">
+                            <canvas id="highestCTCChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center">Contact Our Placement Team</h3>
+                        <form class="mt-4">
+                            <div class="mb-3">
+                                <label for="company" class="form-label">Company Name</label>
+                                <input type="text" class="form-control" id="company" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" rows="4" required></textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Send Message</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Sector-wise Distribution Chart
+    const sectorCtx = document.getElementById('sectorChart').getContext('2d');
+    new Chart(sectorCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Consulting', 'Data Science', 'Research', 'BFSI'],
+            datasets: [{
+                data: [41.7, 23, 16.7, 16.7],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(255, 206, 86, 0.8)',
+                    'rgba(75, 192, 192, 0.8)',
+                    'rgba(255, 99, 132, 0.8)'
+                ]
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+
+    // Placement Records Charts
+    const meanCTCCtx = document.getElementById('meanCTCChart').getContext('2d');
+    new Chart(meanCTCCtx, {
+        type: 'bar',
+        data: {
+            labels: ['2019-21', '2020-22', '2021-23', '2022-24'],
+            datasets: [{
+                label: 'Mean CTC (LPA)',
+                data: [12, 12.5, 13, 13.6],
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 15
+                }
+            }
+        }
+    });
+
+    const medianCTCCtx = document.getElementById('medianCTCChart').getContext('2d');
+    new Chart(medianCTCCtx, {
+        type: 'bar',
+        data: {
+            labels: ['2019-21', '2020-22', '2021-23', '2022-24'],
+            datasets: [{
+                label: 'Median CTC (LPA)',
+                data: [11, 11.5, 12, 13],
+                backgroundColor: 'rgba(255, 206, 86, 0.5)',
+                borderColor: 'rgba(255, 206, 86, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 15
+                }
+            }
+        }
+    });
+
+    const highestCTCCtx = document.getElementById('highestCTCChart').getContext('2d');
+    new Chart(highestCTCCtx, {
+        type: 'bar',
+        data: {
+            labels: ['2019-21', '2020-22', '2021-23', '2022-24'],
+            datasets: [{
+                label: 'Highest CTC (LPA)',
+                data: [23, 24, 24, 25],
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 30
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}
