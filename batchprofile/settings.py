@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-import dj_database_url
 
 # Load environment variables from .env file
 load_dotenv()
@@ -76,9 +75,15 @@ WSGI_APPLICATION = 'batchprofile.wsgi.application'
 
 # Database settings
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME'),  # Database name
+        'USER': os.environ.get('DB_USER'),  # Database user
+        'PASSWORD': os.environ.get('DB_PASSWORD'),  # Database password
+        'HOST': os.environ.get('DB_HOST'),  # Database host (e.g., localhost or Railway-provided host)
+        'PORT': os.environ.get('DB_PORT', '5432'),  # Default PostgreSQL port
+    }
 }
-
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
