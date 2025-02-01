@@ -7,6 +7,10 @@ from django.db.models import Q
 from .models import CustomUser, Project, PlacementActivity, Domain
 from .forms import ProjectForm, CustomUserCreationForm, ProfileSearchForm
 
+
+def home(request):
+    return render(request, 'index.html')
+
 def student_detail(request, pk):
     student = get_object_or_404(CustomUser, pk=pk)
     skills = student.skills.split(',')
