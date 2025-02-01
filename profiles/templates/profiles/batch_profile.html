@@ -1,6 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 
+
+{% load custom_filters %}
+
+{% for item in some_string|split:"," %}
+    {{ item }}
+{% endfor %}
+
 {% block title %}Batch Profile{% endblock %}
 
 {% block content %}
