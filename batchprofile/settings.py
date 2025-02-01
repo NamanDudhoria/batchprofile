@@ -77,7 +77,19 @@ WSGI_APPLICATION = 'batchprofile.wsgi.application'
 # Database settings
 
 DATABASES = {
-    'default': dj_database_url.config(
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('PGDATABASE', 'railway'),
+        'USER': os.getenv('PGUSER', 'postgres'),
+        'PASSWORD': os.getenv('PGPASSWORD', ''),
+        'HOST': os.getenv('PGHOST', 'localhost'),
+        'PORT': os.getenv('PGPORT', '5432'),
+    }
+}
+
+# Override with DATABASE_URL if available
+if os.getenv('DATABASE_URL'):
+    DATABASES['default'] = dj_database_url.config(
         default=os.getenv('DATABASE_URL'),
         conn_max_age=600
     )
