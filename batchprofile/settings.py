@@ -79,11 +79,11 @@ WSGI_APPLICATION = 'batchprofile.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('PGDATABASE', 'railway'),
-        'USER': os.getenv('PGUSER', 'postgres'),
-        'PASSWORD': os.getenv('PGPASSWORD', ''),
-        'HOST': os.getenv('PGHOST', 'localhost'),
-        'PORT': os.getenv('PGPORT', '5432'),
+        'NAME': 'website_db',
+        'USER': 'postgres',
+        'PASSWORD': 'naman@2002',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
