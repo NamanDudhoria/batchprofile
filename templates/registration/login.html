@@ -1,43 +1,256 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Login{% endblock %}
-
 {% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h2 class="text-center mb-4">Login</h2>
-                    <form method="post">
-                        {% csrf_token %}
-                        {% if form.errors %}
-                            <div class="alert alert-danger">
-                                Your username and password didn't match. Please try again.
-                            </div>
-                        {% endif %}
-
-                        <div class="mb-3">
-                            <label for="id_username" class="form-label">Username</label>
-                            <input type="text" name="username" class="form-control" id="id_username" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="id_password" class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" id="id_password" required>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary w-100">Login</button>
-                    </form>
-
-                    <div class="text-center mt-3">
-                        <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
-                        <p><a href="{% url 'password_reset' %}">Forgot Password?</a></p>
-                    </div>
-                </div>
-            </div>
+<div class="login-container">
+    <div class="login-card">
+        <!-- Logo Section -->
+        <div class="text-center mb-4">
+            <img src="{% static 'images/logo.png' %}" alt="IIFT Logo" class="login-logo">
+            <h1 class="welcome-text">Welcome Back</h1>
+            <p class="login-subtitle">Please login to continue</p>
         </div>
+
+
+        <!-- Login Form -->
+        <form method="post" class="login-form">
+            {% csrf_token %}
+            
+            <div class="form-group mb-3">
+                <label for="username">Username</label>
+                <input type="text" 
+                       class="form-control" 
+                       id="username" 
+                       name="username" 
+                       placeholder="Enter your username"
+                       required>
+                <div class="form-text">Please enter your username.</div>
+            </div>
+
+            <div class="form-group mb-4">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" 
+                           class="form-control" 
+                           id="password" 
+                           name="password" 
+                           placeholder="Enter your password"
+                           required>
+                    <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
+                <div class="form-text">Please enter your password.</div>
+            </div>
+
+            <div class="form-options mb-4">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                    <label class="form-check-label" for="remember">Remember me</label>
+                </div>
+                <a href="{% url 'forgot_password' %}" class="forgot-link">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
+
+            <p class="text-center mb-0">
+                Don't have an account? 
+                <a href="{% url 'create_account' %}" class="create-account-link">Create account</a>
+            </p>
+        </form>
     </div>
 </div>
+
+<style>
+:root {
+    --primary-color: #004a8f;
+    --primary-hover: #003666;
+    --text-color: #333;
+    --light-gray: #f5f5f5;
+    --border-color: #e1e1e1;
+}
+
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.login-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 420px;
+}
+
+.login-logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 1.5rem;
+}
+
+.welcome-text {
+    color: var(--text-color);
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.login-subtitle {
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+
+.google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    background: white;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.google-btn:hover {
+    background-color: var(--light-gray);
+}
+
+.google-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.divider {
+    text-align: center;
+    position: relative;
+    margin: 1.5rem 0;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background-color: var(--border-color);
+}
+
+.divider::before { left: 0; }
+.divider::after { right: 0; }
+
+.divider span {
+    background-color: white;
+    padding: 0 1rem;
+    color: #6c757d;
+    font-size: 0.875rem;
+}
+
+.form-group label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0, 74, 143, 0.25);
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+}
+
+.form-text {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.forgot-link,
+.create-account-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.forgot-link:hover,
+.create-account-link:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    padding: 0.75rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
+
+@media (max-width: 576px) {
+    .login-card {
+        padding: 1.5rem;
+    }
+    
+    .login-container {
+        padding: 1rem;
+    }
+}
+</style>
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Password visibility toggle
+    const togglePassword = document.querySelector('.toggle-password');
+    const passwordInput = document.querySelector('#password');
+    
+    togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        
+        const icon = this.querySelector('i');
+        icon.classList.toggle('bi-eye');
+        icon.classList.toggle('bi-eye-slash');
+    });
+});
+</script>
+{% endblock %}
 {% endblock %}

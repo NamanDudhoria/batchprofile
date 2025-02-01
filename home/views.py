@@ -77,3 +77,16 @@ def calculate_points(request):
     user.total_points = total_points
     user.save()
     return JsonResponse({'total_points': total_points})
+
+from django.shortcuts import render
+from profiles.models import CustomUser, Domain
+
+def batch_profile(request):
+    students = CustomUser.objects.all()
+    domains = Domain.objects.all()
+    current_domain = request.GET.get('domain', '')
+    return render(request, 'profiles/batch_profile.html', {
+        'students': students,
+        'domains': domains,
+        'current_domain': current_domain
+    })

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Student Profile{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Profile Information -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">{{ student.get_full_name }}</h2>
+                    <p class="text-muted">{{ student.get_domain_display }}</p>
+                    <div class="mb-3">
+                        <h5>Skills</h5>
+                        {% for skill in student.skills.split(',') %}
+                            <span class="badge bg-primary">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                    {% if student.linkedin_url %}
+                        <a href="{{ student.linkedin_url }}" class="btn btn-outline-primary btn-sm" target="_blank">
+                            LinkedIn Profile
+                        </a>
+                    {% endif %}
+                    {% if student.github_url %}
+                        <a href="{{ student.github_url }}" class="btn btn-outline-dark btn-sm" target="_blank">
+                            GitHub Profile
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <!-- Additional Information -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">Bio</h3>
+                    <p>{{ student.bio }}</p>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">Projects</h3>
+                    <ul class="list-group">
+                        {% for project in student.projects.all %}
+                            <li class="list-group-item">
+                                <h5>{{ project.title }}</h5>
+                                <p>{{ project.description }}</p>
+                                <a href="{{ project.project_url }}" class="btn btn-outline-primary btn-sm" target="_blank">View Project</a>
+                            </li>
+                        {% empty %}
+                            <li class="list-group-item">No projects available.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

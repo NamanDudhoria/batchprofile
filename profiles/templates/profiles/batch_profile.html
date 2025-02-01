@@ -1,9 +1,24 @@
-<!DOCTYPE html>
-{% for student in students %}
-<div>
-    <h3>{{ student.username }}</h3>
-    <p>{{ student.skills }}</p>
-    <p>Total Points: {{ student.total_points }}</p>
-    <a href="{% url 'student_profile' student.id %}">View Profile</a>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Batch Profile{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Batch Profile</h1>
+    <div class="row">
+        {% for student in students %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">{{ student.username }}</h3>
+                    <p class="card-text">{{ student.skills }}</p>
+                    <p class="card-text"><strong>Total Points:</strong> {{ student.total_points }}</p>
+                    <a href="{% url 'student_profile' student.id %}" class="btn btn-primary">View Profile</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
-{% endfor %}
+{% endblock %}

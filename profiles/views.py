@@ -1,24 +1,20 @@
 # profiles/views.py
+# profiles/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
-from .models import CustomUser, Project, PlacementActivity
-from .forms import ProjectForm, CustomUserForm, ProfileSearchForm
-
+from .models import CustomUser, Project, PlacementActivity, Domain
+from .forms import ProjectForm, CustomUserCreationForm, ProfileSearchForm
 
 def student_detail(request, pk):
     student = get_object_or_404(CustomUser, pk=pk)
-    projects = Project.objects.filter(user=student)
-    activities = PlacementActivity.objects.filter(user=student).order_by('-completed_date')
-
+    skills = student.skills.split(',')
     context = {
         'student': student,
-        'projects': projects,
-        'activities': activities,
+        'skills': [skill.strip() for skill in skills]
     }
     return render(request, 'profiles/student_detail.html', context)
-
 
 @login_required
 def dashboard(request):
@@ -29,7 +25,6 @@ def dashboard(request):
         'projects': user_projects,
         'activities': user_activities,
     }
-    return render(request, 'profiles/dashboard.html', context)
 
 
 @login_required
@@ -80,5 +75,6 @@ def batch_profile(request):
         'students': students,
         'form': form
     })
+
 
 # Add any additional views you need here

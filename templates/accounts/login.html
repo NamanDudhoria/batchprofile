@@ -1,37 +1,297 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Login - Your App Name{% endblock %}
 
 {% block content %}
-<div class="auth-container">
-    <div class="card auth-card">
-        <div class="card-body">
-            <h2 class="text-center mb-4">Login</h2>
-            <form method="post">
-                {% csrf_token %}
-                {% if error %}
-                <div class="alert alert-danger">{{ error }}</div>
-                {% endif %}
-                <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" required>
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Login</button>
-            </form>
-            <div class="text-center mt-3">
-                <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
-                <p><a href="{% url 'password_reset' %}">Forgot Password?</a></p>
+<div class="auth-wrapper">
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Logo Section -->
+            <div class="text-center mb-4">
+                <img src="{% static 'images/logo.png' %}" alt="Logo" class="auth-logo" width="80" height="80">
+                <h1 class="auth-title">Welcome Back</h1>
+                <p class="auth-subtitle">Please login to continue</p>
             </div>
+
+            <!-- Social Login Options -->
+            <div class="social-login mb-4">
+                <button type="button" class="btn btn-outline-secondary w-100 mb-2">
+                    <img src="{% static 'images/google-icon.svg' %}" alt="" width="20" height="20">
+                    <span>Continue with Google</span>
+                </button>
+                <div class="divider">
+                    <span>or continue with email</span>
+                </div>
+            </div>
+
+            <!-- Login Form -->
+            <form method="post" id="loginForm" class="needs-validation" novalidate>
+                {% csrf_token %}
+                
+                {% if error %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    {{ error }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endif %}
+
+                <!-- Username Field -->
+                <div class="form-floating mb-3">
+                    <input type="text" 
+                           class="form-control" 
+                           id="username" 
+                           name="username" 
+                           placeholder="Username"
+                           autocomplete="username"
+                           required
+                           aria-label="Username">
+                    <label for="username">Username</label>
+                    <div class="invalid-feedback">
+                        Please enter your username.
+                    </div>
+                </div>
+
+                <!-- Password Field -->
+                <div class="form-floating mb-3">
+                    <div class="password-field">
+                        <input type="password" 
+                               class="form-control" 
+                               id="password" 
+                               name="password" 
+                               placeholder="Password"
+                               autocomplete="current-password"
+                               required
+                               aria-label="Password">
+                        <label for="password">Password</label>
+                        <button type="button" 
+                                class="btn btn-link password-toggle" 
+                                aria-label="Toggle password visibility">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+                    <div class="invalid-feedback">
+                        Please enter your password.
+                    </div>
+                </div>
+
+                <!-- Remember Me & Forgot Password -->
+                <div class="d-flex justify-content-between mb-4">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="rememberMe" name="remember">
+                        <label class="form-check-label" for="rememberMe">Remember me</label>
+                    </div>
+                    <a href="{% url 'password_reset' %}" class="text-primary text-decoration-none">
+                        Forgot password?
+                    </a>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary w-100 mb-3" id="submitBtn">
+                    <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                    <span class="btn-text">Login</span>
+                </button>
+
+                <!-- Sign Up Link -->
+                <p class="text-center mb-0">
+                    Don't have an account? 
+                    <a href="{% url 'signup' %}" class="text-primary text-decoration-none">Create account</a>
+                </p>
+            </form>
         </div>
     </div>
 </div>
 {% endblock %}
-<div class="text-center mt-3">
-    <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
-    <p><a href="{% url 'password_reset' %}">Forgot Password?</a></p>
-</div>
+
+{% block extra_css %}
+<style>
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --bg-gradient-start: #f8fafc;
+    --bg-gradient-end: #e2e8f0;
+}
+
+.auth-wrapper {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+}
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 440px;
+    background: white;
+    border-radius: 1rem;
+    padding: 2.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.auth-logo {
+    margin-bottom: 1rem;
+}
+
+.auth-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
+
+.auth-subtitle {
+    color: #64748b;
+    font-size: 0.975rem;
+}
+
+.social-login .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    font-weight: 500;
+}
+
+.divider {
+    text-align: center;
+    position: relative;
+    margin: 1.5rem 0;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    height: 1px;
+    background-color: #e2e8f0;
+}
+
+.divider::before {
+    left: 0;
+}
+
+.divider::after {
+    right: 0;
+}
+
+.divider span {
+    background-color: white;
+    padding: 0 1rem;
+    color: #64748b;
+    font-size: 0.875rem;
+}
+
+.form-floating > .form-control {
+    padding: 1rem 0.75rem;
+}
+
+.password-field {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    color: #64748b;
+}
+
+.password-toggle:hover {
+    color: var(--primary-color);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    padding: 0.75rem;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+@media (max-width: 576px) {
+    .auth-card {
+        padding: 1.5rem;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Form validation
+    const form = document.getElementById('loginForm');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    form.addEventListener('submit', function(event) {
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        } else {
+            // Show loading state
+            const spinner = submitBtn.querySelector('.spinner-border');
+            const btnText = submitBtn.querySelector('.btn-text');
+            
+            submitBtn.disabled = true;
+            spinner.classList.remove('d-none');
+            btnText.textContent = 'Logging in...';
+        }
+        
+        form.classList.add('was-validated');
+    });
+
+    // Password visibility toggle
+    const togglePassword = document.querySelector('.password-toggle');
+    const password = document.getElementById('password');
+    
+    togglePassword.addEventListener('click', function() {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        
+        const icon = this.querySelector('i');
+        icon.classList.toggle('bi-eye');
+        icon.classList.toggle('bi-eye-slash');
+    });
+
+    // Disable form submission on enter key for better UX
+    form.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            submitBtn.click();
+        }
+    });
+
+    // Alert auto-dismiss
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(alert => {
+        setTimeout(() => {
+            const bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close();
+        }, 5000);
+    });
+});
+</script>
+{% endblock %}

@@ -6,209 +6,142 @@
 {% block content %}
 <div class="hire-section py-5">
     <div class="container">
-        <h1 class="section-title">Why Hire From Us?</h1>
+        <div class="text-center mb-12" data-aos="fade-down">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Why Hire From Us?</h1>
+            <div class="w-24 h-1 bg-blue-500 mx-auto"></div>
+        </div>
 
         <!-- Statistics Section -->
-        <div class="row mb-5">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Placement Highlights</h3>
-                        <div class="text-center">
-                            <p><strong>Highest Stipend:</strong> 1.25 LPM</p>
-                            <p><strong>Mean CTC:</strong> 13.06 LPA</p>
-                            <p><strong>Highest CTC:</strong> 24 LPA</p>
-                            <p><strong>Median CTC:</strong> 13 LPA</p>
-                        </div>
+        <div class="grid md:grid-cols-2 gap-6 mb-12">
+            <!-- Placement Highlights -->
+            <div class="bg-white rounded-lg shadow-lg p-6 highlight-card" data-aos="fade-right">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Placement Highlights</h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center p-4 bg-blue-50 rounded-lg">
+                        <span class="font-medium">Highest Stipend</span>
+                        <span class="text-blue-600 font-bold">1.25 LPM</span>
+                    </div>
+                    <div class="flex justify-between items-center p-4 bg-green-50 rounded-lg">
+                        <span class="font-medium">Mean CTC</span>
+                        <span class="text-green-600 font-bold">13.06 LPA</span>
+                    </div>
+                    <div class="flex justify-between items-center p-4 bg-purple-50 rounded-lg">
+                        <span class="font-medium">Highest CTC</span>
+                        <span class="text-purple-600 font-bold">25.00 LPA</span>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Sector-wise Distribution</h3>
-                        <div class="chart-container">
-                            <canvas id="sectorChart"></canvas>
-                        </div>
+
+            <!-- Additional Highlights -->
+            <div class="bg-white rounded-lg shadow-lg p-6 highlight-card" data-aos="fade-left">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Additional Highlights</h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center p-4 bg-yellow-50 rounded-lg">
+                        <span class="font-medium">Top Recruiters</span>
+                        <span class="text-yellow-600 font-bold">50+ Companies</span>
+                    </div>
+                    <div class="flex justify-between items-center p-4 bg-red-50 rounded-lg">
+                        <span class="font-medium">Internship Opportunities</span>
+                        <span class="text-red-600 font-bold">100% Placement</span>
+                    </div>
+                    <div class="flex justify-between items-center p-4 bg-indigo-50 rounded-lg">
+                        <span class="font-medium">Global Exposure</span>
+                        <span class="text-indigo-600 font-bold">International Internships</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Past Recruiters Section -->
-        <div class="row mb-5">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Past Recruiters</h3>
-                        <div class="d-flex flex-wrap justify-content-center">
-                            <img src="{% static 'images/recruiters.png' %}" alt="Past Recruiters" class="img-fluid">
-                        </div>
-                    </div>
-                </div>
+        <!-- Past Recruiters -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-12" data-aos="fade-up">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Past Recruiters</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 text-center">
+                <div class="p-4 bg-gray-100 rounded-lg">American Express</div>
+                <div class="p-4 bg-gray-100 rounded-lg">Citi</div>
+                <div class="p-4 bg-gray-100 rounded-lg">Deloitte</div>
+                <div class="p-4 bg-gray-100 rounded-lg">CRISIL</div>
+                <div class="p-4 bg-gray-100 rounded-lg">PWC</div>
+                <div class="p-4 bg-gray-100 rounded-lg">KPMG</div>
+            </div>
+        </div>
+        
+        <!-- Technical Skills -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-12" data-aos="fade-up">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Technical Skills</h3>
+            <div class="grid grid-cols-3 md:grid-cols-6 gap-6 text-center">
+                <div class="p-4 bg-gray-100 rounded-lg">Python</div>
+                <div class="p-4 bg-gray-100 rounded-lg">R</div>
+                <div class="p-4 bg-gray-100 rounded-lg">SQL</div>
+                <div class="p-4 bg-gray-100 rounded-lg">STATA</div>
+                <div class="p-4 bg-gray-100 rounded-lg">Excel</div>
+                <div class="p-4 bg-gray-100 rounded-lg">LaTeX</div>
             </div>
         </div>
 
-        <!-- Placement Records Section -->
-        <div class="row mb-5">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h4>Mean CTC</h4>
-                        <div class="chart-container">
-                            <canvas id="meanCTCChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h4>Median CTC</h4>
-                        <div class="chart-container">
-                            <canvas id="medianCTCChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h4>Highest CTC</h4>
-                        <div class="chart-container">
-                            <canvas id="highestCTCChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+        <!-- Chart Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-12" data-aos="fade-up">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Placement Statistics</h3>
+            <canvas id="placementChart" width="100" height="50"></canvas>
         </div>
 
-        <!-- Contact Form -->
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title text-center">Contact Our Placement Team</h3>
-                        <form class="mt-4">
-                            <div class="mb-3">
-                                <label for="company" class="form-label">Company Name</label>
-                                <input type="text" class="form-control" id="company" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control" id="message" rows="4" required></textarea>
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Send Message</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+        <!-- Sector Distribution Chart -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-12" data-aos="fade-up">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Sector Distribution</h3>
+            <canvas id="sectorChart" width="100" height="50"></canvas>
+        </div>
+
+        <!-- Mean CTC Chart -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-12" data-aos="fade-up">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Mean CTC</h3>
+            <canvas id="meanCTCChart" width="100" height="50"></canvas>
+        </div>
+
+        <!-- Median CTC Chart -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-12" data-aos="fade-up">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Median CTC</h3>
+            <canvas id="medianCTCChart" width="100" height="50"></canvas>
+        </div>
+
+        <!-- Highest CTC Chart -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-12" data-aos="fade-up">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Highest CTC</h3>
+            <canvas id="highestCTCChart" width="100" height="50"></canvas>
         </div>
     </div>
 </div>
+        
+        <!-- Contact Form -->
+        <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6" data-aos="fade-up">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Contact Our Placement Team</h3>
+            <form class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Company Name</label>
+                    <input type="text" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                    <textarea rows="4" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"></textarea>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition-colors">
+                        Send Message
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/hire-charts.js' %}"></script>
 {% endblock %}
 
-{% block extra_js %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    // Sector-wise Distribution Chart
-    const sectorCtx = document.getElementById('sectorChart').getContext('2d');
-    new Chart(sectorCtx, {
-        type: 'pie',
-        data: {
-            labels: ['Consulting', 'Data Science', 'Research', 'BFSI'],
-            datasets: [{
-                data: [41.7, 23, 16.7, 16.7],
-                backgroundColor: [
-                    'rgba(54, 162, 235, 0.8)',
-                    'rgba(255, 206, 86, 0.8)',
-                    'rgba(75, 192, 192, 0.8)',
-                    'rgba(255, 99, 132, 0.8)'
-                ]
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
 
-    // Placement Records Charts
-    const meanCTCCtx = document.getElementById('meanCTCChart').getContext('2d');
-    new Chart(meanCTCCtx, {
-        type: 'bar',
-        data: {
-            labels: ['2019-21', '2020-22', '2021-23', '2022-24'],
-            datasets: [{
-                label: 'Mean CTC (LPA)',
-                data: [12, 12.5, 13, 13.6],
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 15
-                }
-            }
-        }
-    });
-
-    const medianCTCCtx = document.getElementById('medianCTCChart').getContext('2d');
-    new Chart(medianCTCCtx, {
-        type: 'bar',
-        data: {
-            labels: ['2019-21', '2020-22', '2021-23', '2022-24'],
-            datasets: [{
-                label: 'Median CTC (LPA)',
-                data: [11, 11.5, 12, 13],
-                backgroundColor: 'rgba(255, 206, 86, 0.5)',
-                borderColor: 'rgba(255, 206, 86, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 15
-                }
-            }
-        }
-    });
-
-    const highestCTCCtx = document.getElementById('highestCTCChart').getContext('2d');
-    new Chart(highestCTCCtx, {
-        type: 'bar',
-        data: {
-            labels: ['2019-21', '2020-22', '2021-23', '2022-24'],
-            datasets: [{
-                label: 'Highest CTC (LPA)',
-                data: [23, 24, 24, 25],
-                backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 30
-                }
-            }
-        }
-    });
-</script>
-{% endblock %}

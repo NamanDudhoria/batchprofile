@@ -5,10 +5,11 @@
 
 {% block content %}
 <!-- Hero Section -->
-<div class="hero-section text-white py-5">
+<div class="hero-section text-white py-5" style="background-image: url('{% static 'images/hero-background.jpg' %}'); background-size: cover; background-position: center;">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-8">
+                <img src="{% static 'images/logo.png' %}" alt="IIFT Logo" class="mb-4" style="max-width: 150px;">
                 <h1 class="display-4">Department of Economics</h1>
                 <p class="lead">Ranked 8th by IDEAS-RePEc, IIFT's Department of Economics stands as a cornerstone of academic excellence in India.</p>
                 <div class="mt-4">
@@ -36,6 +37,7 @@
         </div>
     </div>
 </section>
+
 
 <!-- Courses Section -->
 <section class="courses-section py-5 bg-light">
