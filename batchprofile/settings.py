@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',  # Add whitenoise
     'profiles',
     'accounts',
+    'home',
 ]
 
 MIDDLEWARE = [
