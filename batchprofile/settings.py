@@ -4,6 +4,13 @@ from dotenv import load_dotenv
 import dj_database_url
 import whitenoise
 
+import logging
+logger = logging.getLogger(__name__)
+
+database_url = os.environ.get('DATABASE_URL')
+logger.info(f"DATABASE_URL is {'set' if database_url else 'not set'}")
+
+
 # Load environment variables from .env file
 if not os.environ.get('RENDER'):
     load_dotenv()
@@ -67,27 +74,13 @@ TEMPLATES = [
 WSGI_APPLICATION = 'batchprofile.wsgi.application'
 
 # Database
-# Use dj-database-url for more reliable database connection
-DATABASE_URL = os.environ.get('DATABASE_URL')
-if DATABASE_URL:
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=DATABASE_URL,
-            conn_max_age=600,
-            conn_health_checks=True,
-        )
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('DB_NAME'),
-            'USER': os.environ.get('DB_USER'),
-            'PASSWORD': os.environ.get('DB_PASSWORD'),
-            'HOST': os.environ.get('DB_HOST'),
-            'PORT': os.environ.get('DB_PORT', '5432'),
-        }
-    }
+DATABASES = {
+    'default': dj_database_url.config(
+        default='postgres://error:error@localhost:5432/error',  # This will make it obvious if the env var is missing
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
+}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
