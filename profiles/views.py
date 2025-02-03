@@ -8,7 +8,6 @@ from .models import CustomUser, Project, PlacementActivity, Domain
 from .forms import ProjectForm, CustomUserCreationForm, ProfileSearchForm
 from django.db.utils import OperationalError
 import logging
-from .forms import CustomUserForm
 
 logger = logging.getLogger(__name__)
 
@@ -55,13 +54,13 @@ def upload_project(request):
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
-        form = CustomUserForm(request.POST, request.FILES, instance=request.user)
+        form = CustomUserCreationForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
             messages.success(request, 'Profile updated successfully!')
             return redirect('dashboard')
     else:
-        form = CustomUserForm(instance=request.user)
+        form = CustomUserCreationForm(instance=request.user)
     return render(request, 'profiles/edit_profile.html', {'form': form})
 
 
