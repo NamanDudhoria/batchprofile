@@ -22,9 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
+DEBUG = False
 
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1,.onrender.com').split(',')
+ALLOWED_HOSTS = ALLOWED_HOSTS = ['batchprofile.onrender.com', 'localhost', '127.0.0.1']
 
 # Application definition
 INSTALLED_APPS = [
@@ -74,9 +74,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'batchprofile.wsgi.application'
 
 # Database
+database_url = os.environ.get('DATABASE_URL')
+
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgres://error:error@localhost:5432/error',  # This will make it obvious if the env var is missing
+        default='postgresql://batchprofile_production_user:6iO4Oyl14useuaaQMqTHcJgxhcBuP0zK@dpg-cufhtsvqrc73fqrc5g-a.oregon-postgres.render.com:5432/batchprofile_production',
         conn_max_age=600,
         conn_health_checks=True,
     )

@@ -82,6 +82,7 @@ from django.shortcuts import render
 from profiles.models import CustomUser, Domain
 
 def batch_profile(request):
+    
     students = CustomUser.objects.all()
     domains = Domain.objects.all()
     current_domain = request.GET.get('domain', '')
@@ -90,3 +91,5 @@ def batch_profile(request):
         'domains': domains,
         'current_domain': current_domain
     })
+
+    

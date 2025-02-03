@@ -60,25 +60,34 @@ def edit_profile(request):
 
 
 def batch_profile(request):
-    form = ProfileSearchForm(request.GET)
-    students = CustomUser.objects.all()
+    try:
+        form = ProfileSearchForm(request.GET)
+        students = CustomUser.objects.all()
 
-    if form.is_valid():
-        if form.cleaned_data['search']:
-            search_query = form.cleaned_data['search']
-            students = students.filter(
-                Q(first_name__icontains=search_query) |
-                Q(last_name__icontains=search_query) |
-                Q(skills__icontains=search_query)
-            )
+        if form.is_valid():
+            if form.cleaned_data['search']:
+                search_query = form.cleaned_data['search']
+                students = students.filter(
+                    Q(first_name__icontains=search_query) |
+                    Q(last_name__icontains=search_query) |
+                    Q(skills__icontains=search_query)
+                )
 
-        if form.cleaned_data['domain']:
-            students = students.filter(domain=form.cleaned_data['domain'])
+            if form.cleaned_data['domain']:
+                students = students.filter(domain=form.cleaned_data['domain'])
 
-    return render(request, 'profiles/batch_profile.html', {
-        'students': students,
-        'form': form
-    })
-
+        return render(request, 'profiles/batch_profile.html', {
+            'students': students,
+            'form': form
+        })
+    except OperationalError as e:
+        # Log the error
+        print(f"Database connection error: {e}")
+        messages.error(request, "Unable to connect to the database. Please try again later.")
+        return render(request, 'profiles/batch_profile.html', {
+            'students': [],
+            'form': form,
+            'error': True
+        })
 
 # Add any additional views you need here
