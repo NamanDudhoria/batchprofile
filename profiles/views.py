@@ -6,7 +6,11 @@ from django.contrib import messages
 from django.db.models import Q
 from .models import CustomUser, Project, PlacementActivity, Domain
 from .forms import ProjectForm, CustomUserCreationForm, ProfileSearchForm
+from django.db.utils import OperationalError
+import logging
+from .forms import CustomUserForm
 
+logger = logging.getLogger(__name__)
 
 def home(request):
     return render(request, 'index.html')
@@ -29,6 +33,8 @@ def dashboard(request):
         'projects': user_projects,
         'activities': user_activities,
     }
+
+    return render(request, 'profiles/dashboard.html', context)
 
 
 @login_required
