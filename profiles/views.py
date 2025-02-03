@@ -7,7 +7,6 @@ from django.db.models import Q
 from .models import CustomUser, Project, PlacementActivity, Domain
 from .forms import ProjectForm, CustomUserCreationForm, ProfileSearchForm
 
-logger = logging.getLogger(__name__)
 
 def home(request):
     return render(request, 'index.html')
