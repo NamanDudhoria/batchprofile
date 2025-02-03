@@ -7,6 +7,7 @@ from django.db.models import Q
 from .models import CustomUser, Project, PlacementActivity, Domain
 from .forms import ProjectForm, CustomUserCreationForm, ProfileSearchForm
 
+logger = logging.getLogger(__name__)
 
 def home(request):
     return render(request, 'index.html')
@@ -81,13 +82,9 @@ def batch_profile(request):
             'form': form
         })
     except OperationalError as e:
-        # Log the error
-        print(f"Database connection error: {e}")
+        # Handle database connection error
+        logger.error(f"Database connection error: {e}")
         messages.error(request, "Unable to connect to the database. Please try again later.")
-        return render(request, 'profiles/batch_profile.html', {
-            'students': [],
-            'form': form,
-            'error': True
-        })
+        return render(request, '500.html', status=500)
 
 # Add any additional views you need here

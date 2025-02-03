@@ -78,9 +78,11 @@ database_url = os.environ.get('DATABASE_URL')
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://batchprofile_production_user:6iO4Oyl14useuaaQMqTHcJgxhcBuP0zK@dpg-cufhtsvqrc73fqrc5g-a.oregon-postgres.render.com:5432/batchprofile_production',
+        default=os.getenv('DATABASE_URL'),
         conn_max_age=600,
         conn_health_checks=True,
+        ssl_require=True,
+        ssl_cert_reqs=False
     )
 }
 
@@ -191,3 +193,32 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Session settings
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_AGE = 1209600  # 2 weeks in seconds
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
