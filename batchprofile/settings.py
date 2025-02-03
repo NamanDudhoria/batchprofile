@@ -75,7 +75,6 @@ WSGI_APPLICATION = 'batchprofile.wsgi.application'
 
 # Database
 database_url = os.environ.get('DATABASE_URL')
-
 DATABASES = {
     'default': dj_database_url.config(
         default=os.getenv('DATABASE_URL'),

@@ -20,6 +20,11 @@ class ProjectForm(forms.ModelForm):
         }
 
 class CustomUserCreationForm(UserCreationForm):
+    domains = forms.ModelMultipleChoiceField(
+        queryset=Domain.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )
     class Meta:
         model = CustomUser
         fields = [
