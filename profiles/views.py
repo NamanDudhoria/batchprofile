@@ -78,17 +78,16 @@ def batch_profile(request):
                     Q(skills__icontains=search_query)
                 )
 
+            # Modified domain filtering to work with CharField
             if form.cleaned_data['domain']:
-                students = students.filter(domain=form.cleaned_data['domain'])
+                domain_name = form.cleaned_data['domain']
+                students = students.filter(domain__icontains=domain_name)
 
         return render(request, 'profiles/batch_profile.html', {
             'students': students,
             'form': form
         })
-    except OperationalError as e:
-        # Handle database connection error
-        logger.error(f"Database connection error: {e}")
-        messages.error(request, "Unable to connect to the database. Please try again later.")
+    except Exception as e:
+        logger.error(f"Error in batch_profile view: {str(e)}")
+        messages.error(request, "An error occurred while loading profiles. Please try again later.")
         return render(request, '500.html', status=500)
-
-# Add any additional views you need here
