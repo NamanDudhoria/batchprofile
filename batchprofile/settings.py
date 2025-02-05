@@ -68,14 +68,18 @@ WSGI_APPLICATION = 'batchprofile.wsgi.application'
 
 # Database
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL'),
-        conn_max_age=600,
-        conn_health_checks=True,
-        ssl_require=os.getenv('DATABASE_SSLMODE', 'require') == 'require'
-    )
+    'default': {
+        **dj_database_url.config(
+            default=os.getenv('DATABASE_URL'),
+            conn_max_age=600,
+            conn_health_checks=True,
+            ssl_require=True
+        ),
+        'OPTIONS': {
+            'sslmode': 'require',  # Changed from verify-full to require
+        }
+    }
 }
-
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
