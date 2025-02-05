@@ -22,16 +22,21 @@ class ProjectForm(forms.ModelForm):
 class CustomUserCreationForm(UserCreationForm):
     domains = forms.ModelMultipleChoiceField(
         queryset=Domain.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
-        required=False
+        widget=forms.SelectMultiple(attrs={
+            'class': 'form-select',
+            'size': '5',  # Show 5 options at once
+            'style': 'height: auto;'  # Allow the select to expand
+        }),
+        required=False,
+        help_text="Hold Ctrl/Cmd to select multiple domains"
     )
+
     class Meta:
         model = CustomUser
         fields = [
             'first_name', 'last_name', 'email', 'username', 'password1', 'password2',
-            'profile_picture', 'bio', 'skills', 'domain', 'resume', 'linkedin_url', 
-            'github_url', 'hackerrank_url', 'leetcode_url', 'kaggle_url', 
-            'total_activity_points'
+            'profile_picture', 'bio', 'skills', 'domains', 'resume', 'linkedin_url', 
+            'github_url', 'hackerrank_url', 'leetcode_url', 'kaggle_url'
         ]
         widgets = {
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
