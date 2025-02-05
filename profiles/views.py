@@ -78,11 +78,6 @@ def batch_profile(request):
                     Q(skills__icontains=search_query)
                 )
 
-            # Modified domain filtering to work with CharField
-            if form.cleaned_data['domain']:
-                domain_name = form.cleaned_data['domain']
-                students = students.filter(domain__icontains=domain_name)
-
         return render(request, 'profiles/batch_profile.html', {
             'students': students,
             'form': form
