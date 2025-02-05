@@ -13,7 +13,7 @@ class CustomUser(AbstractUser):
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
     skills = models.CharField(max_length=255, blank=True, null=True)
-    domain = models.CharField(max_length=255, blank=True, null=True)
+    domains = models.CharField(max_length=255, blank=True, null=True)
     resume = models.FileField(upload_to='resumes/', blank=True, null=True)
     linkedin_url = models.URLField(max_length=200, blank=True, null=True)
     github_url = models.URLField(max_length=200, blank=True, null=True)

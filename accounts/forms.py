@@ -6,11 +6,11 @@ from accounts.models import Activity
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['title', 'description', 'domain', 'project_url', 'file', 'project_image']
+        fields = ['title', 'description', 'domains', 'project_url', 'file', 'project_image']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'rows': 4, 'class': 'form-control'}),
-            'domain': forms.SelectMultiple(attrs={'class': 'form-select'}),
+            'domains': forms.SelectMultiple(attrs={'class': 'form-select'}),
             'project_url': forms.URLInput(attrs={'class': 'form-control'}),
             'file': forms.ClearableFileInput(attrs={'class': 'form-control'}),
             'project_image': forms.ClearableFileInput(attrs={
@@ -24,8 +24,7 @@ class CustomUserCreationForm(UserCreationForm):
         queryset=Domain.objects.all(),
         widget=forms.SelectMultiple(attrs={
             'class': 'form-select',
-            'size': '5',  # Show 5 options at once
-            'style': 'height: auto;'  # Allow the select to expand
+            'style': 'min-height: 120px;'  # Makes the select box taller
         }),
         required=False,
         help_text="Hold Ctrl/Cmd to select multiple domains"
@@ -77,7 +76,7 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = [
-            'profile_picture', 'bio', 'skills', 'domain', 'resume', 
+            'profile_picture', 'bio', 'skills', 'domains', 'resume', 
             'linkedin_url', 'github_url', 'hackerrank_url', 'leetcode_url', 
             'kaggle_url'
         ]
@@ -89,7 +88,7 @@ class ProfileUpdateForm(forms.ModelForm):
             }),
             'bio': forms.Textarea(attrs={'rows': 4, 'class': 'form-control'}),
             'skills': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter skills separated by commas'}),
-            'domain': forms.SelectMultiple(attrs={'class': 'form-select'}),
+            'domains': forms.SelectMultiple(attrs={'class': 'form-select'}),
             'resume': forms.ClearableFileInput(attrs={'class': 'form-control'}),
             'linkedin_url': forms.URLInput(attrs={'class': 'form-control'}),
             'github_url': forms.URLInput(attrs={'class': 'form-control'}),
@@ -103,7 +102,7 @@ class ProfileSearchForm(forms.Form):
         'placeholder': 'Search by name, skills, or domain...',
         'class': 'form-control'
     }))
-    domain = forms.ModelChoiceField(
+    domains = forms.ModelChoiceField(
         queryset=Domain.objects.all(), 
         required=False, 
         widget=forms.Select(attrs={'class': 'form-select'})
