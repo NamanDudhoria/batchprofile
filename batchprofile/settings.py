@@ -79,7 +79,7 @@ DATABASES = {
 
         'PASSWORD': '6iO4Oyll4useuaaQMqTHcJgxhcBuP0rK',
 
-        'HOST': 'dpg-cufhtsvqrc73fqrc5g-a.oregon-postgres.render.com',  # Corrected host
+        'HOST': 'dpg-cufhtstsvqrc73fqrc5g-a.oregon-postgres.render.com',  # Corrected host
 
         'PORT': 5432,  # Explicit port
 
