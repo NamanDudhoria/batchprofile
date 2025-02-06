@@ -71,7 +71,7 @@ DATABASES = {
 
     'default': {
 
-        'ENGINE': 'Django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql',
 
         'NAME': 'batchprofile_production',
 
