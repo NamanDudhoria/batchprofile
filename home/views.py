@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from accounts.models import CustomUser, Project, Activity
-
+from accounts.models import CustomUser, Domain
+from django.db.models import Q
+from django.http import JsonResponse
 
 def home(request):
     core_courses = [
@@ -43,49 +43,19 @@ def home(request):
     }
     return render(request, 'home/index.html', context)
 
-
 def hire_from_us(request):
     return render(request, 'home/hire_from_us.html')
 
-# Search functionality
 def search_students(request):
     query = request.GET.get('q', '')
     students = CustomUser.objects.filter(
         Q(first_name__icontains=query) |
         Q(last_name__icontains=query) |
-        Q(skills__icontains=query) |
-        Q(domain__icontains=query)
+        Q(skills__icontains=query)
     )
     return JsonResponse({'students': list(students.values())})
 
-# Export profile as PDF
-def export_profile_pdf(request, pk):
-    student = get_object_or_404(CustomUser, pk=pk)
-    template_path = 'profiles/pdf_template.html'
-    context = {'student': student}
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="{student.username}_profile.pdf"'
-    template = get_template(template_path)
-    html = template.render(context)
-    pisa_status = pisa.CreatePDF(html, dest=response)
-    if pisa_status.err:
-        return HttpResponse('PDF generation error')
-    return response
-
-# Activity points calculation
-def calculate_points(request):
-    user = request.user
-    activities = PlacementActivity.objects.filter(user=user)
-    total_points = sum(activity.points for activity in activities)
-    user.total_points = total_points
-    user.save()
-    return JsonResponse({'total_points': total_points})
-
-from django.shortcuts import render
-from profiles.models import CustomUser, Domain
-
 def batch_profile(request):
-    
     students = CustomUser.objects.all()
     domains = Domain.objects.all()
     current_domain = request.GET.get('domain', '')
@@ -94,5 +64,3 @@ def batch_profile(request):
         'domains': domains,
         'current_domain': current_domain
     })
-
-    

@@ -31,10 +31,9 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Profile updated successfully!')
-            return redirect('profile_view')
+            return redirect('profiles:profile_view')
     else:
         form = CustomUserChangeForm(instance=request.user)
-    
     return render(request, 'profiles/edit_profile.html', {'form': form})
 
 @login_required
@@ -45,12 +44,11 @@ def add_project(request):
             project = form.save(commit=False)
             project.user = request.user
             project.save()
-            form.save_m2m()  # Save many-to-many relationships
+            form.save_m2m()
             messages.success(request, 'Project added successfully!')
-            return redirect('profile_view')
+            return redirect('profiles:profile_view')
     else:
         form = ProjectForm()
-    
     return render(request, 'profiles/add_project.html', {'form': form})
 
 @login_required
@@ -62,10 +60,9 @@ def add_activity(request):
             activity.user = request.user
             activity.save()
             messages.success(request, 'Activity added successfully!')
-            return redirect('profile_view')
+            return redirect('profiles:profile_view')
     else:
         form = ActivityForm()
-    
     return render(request, 'profiles/add_activity.html', {'form': form})
 
 @login_required

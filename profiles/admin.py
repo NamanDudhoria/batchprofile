@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import Student
+# No models to register since they're all in accounts app
 
-admin.site.register(Student)
 

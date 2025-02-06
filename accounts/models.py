@@ -1,53 +1,102 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
+from django.core.validators import FileExtensionValidator, URLValidator, MinValueValidator
+from django.core.exceptions import ValidationError
+
+def validate_file_size(value):
+    filesize = value.size
+    if filesize > 5*1024*1024:  # 5MB limit
+        raise ValidationError("Maximum file size is 5MB")
+
+def validate_image_size(value):
+    filesize = value.size
+    if filesize > 2*1024*1024:  # 2MB limit
+        raise ValidationError("Maximum image size is 2MB")
 
 class Domain(models.Model):
-    name = models.CharField(max_length=100, unique=True)  # Added unique constraint
+    name = models.CharField(max_length=100, unique=True)
     
     class Meta:
         verbose_name_plural = 'Domains'
+        ordering = ['name']
     
     def __str__(self):
         return self.name
 
 class CustomUser(AbstractUser):
-    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
-    bio = models.TextField(blank=True, null=True)
-    skills = models.TextField(blank=True, null=True)  # Changed to TextField for more flexibility
-    domains = models.ManyToManyField(Domain, related_name='users', blank=True)  # Changed to ManyToManyField
-    resume = models.FileField(upload_to='resumes/', blank=True, null=True)
-    linkedin_url = models.URLField(max_length=200, blank=True, null=True)
-    github_url = models.URLField(max_length=200, blank=True, null=True)
-    hackerrank_url = models.URLField(max_length=200, blank=True, null=True)
-    leetcode_url = models.URLField(max_length=200, blank=True, null=True)
-    kaggle_url = models.URLField(max_length=200, blank=True, null=True)
-    total_activity_points = models.IntegerField(default=0)
+    profile_picture = models.ImageField(
+        upload_to='profile_pictures/', 
+        blank=True, 
+        null=True,
+        validators=[
+            FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png']),
+            validate_image_size
+        ]
+    )
+    bio = models.TextField(blank=True, null=True, max_length=500)
+    skills = models.TextField(blank=True, null=True)
+    domains = models.ManyToManyField(Domain, related_name='users', blank=True)
+    resume = models.FileField(
+        upload_to='resumes/', 
+        blank=True, 
+        null=True,
+        validators=[
+            FileExtensionValidator(allowed_extensions=['pdf', 'doc', 'docx']),
+            validate_file_size
+        ]
+    )
+    linkedin_url = models.URLField(max_length=200, blank=True, null=True, validators=[URLValidator()])
+    github_url = models.URLField(max_length=200, blank=True, null=True, validators=[URLValidator()])
+    hackerrank_url = models.URLField(max_length=200, blank=True, null=True, validators=[URLValidator()])
+    leetcode_url = models.URLField(max_length=200, blank=True, null=True, validators=[URLValidator()])
+    kaggle_url = models.URLField(max_length=200, blank=True, null=True, validators=[URLValidator()])
+    total_activity_points = models.IntegerField(default=0, validators=[MinValueValidator(0)])
 
     class Meta:
         verbose_name_plural = 'Custom Users'
+        ordering = ['-total_activity_points', 'username']
 
     def __str__(self):
         return self.username
 
+    def clean(self):
+        super().clean()
+        if self.bio and len(self.bio) > 500:
+            raise ValidationError({'bio': 'Bio must be less than 500 characters.'})
+
 class Project(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='projects')
     title = models.CharField(max_length=200)
-    description = models.TextField()
+    description = models.TextField(max_length=1000)
     domains = models.ManyToManyField(Domain, related_name='projects')
-    project_url = models.URLField(blank=True, null=True)
-    file = models.FileField(upload_to='projects/', blank=True, null=True)
-    created_date = models.DateTimeField(auto_now_add=True)  # Added creation date
+    project_url = models.URLField(blank=True, null=True, validators=[URLValidator()])
+    file = models.FileField(
+        upload_to='projects/', 
+        blank=True, 
+        null=True,
+        validators=[
+            FileExtensionValidator(allowed_extensions=['pdf', 'zip', 'rar', 'doc', 'docx']),
+            validate_file_size
+        ]
+    )
+    created_date = models.DateTimeField(auto_now_add=True)
     completed_date = models.DateField(default=timezone.now)
     verification_status = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ['-completed_date']  # Added default ordering
+        ordering = ['-completed_date', '-created_date']
+        verbose_name_plural = 'Projects'
 
     def __str__(self):
         return self.title
 
-class Activity(models.Model):  # Renamed from PlacementActivity for consistency
+    def clean(self):
+        super().clean()
+        if self.completed_date and self.completed_date > timezone.now().date():
+            raise ValidationError({'completed_date': 'Completion date cannot be in the future.'})
+
+class Activity(models.Model):
     ACTIVITY_TYPES = [
         ('project', 'Project Submission'),
         ('certification', 'Certification'),
@@ -57,21 +106,24 @@ class Activity(models.Model):  # Renamed from PlacementActivity for consistency
     ]
 
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='activities')
-    title = models.CharField(max_length=200, default='Untitled Activity')
-    description = models.TextField()
+    title = models.CharField(max_length=200)
+    description = models.TextField(max_length=1000)
     activity_type = models.CharField(max_length=20, choices=ACTIVITY_TYPES)
-    points = models.PositiveIntegerField(default=0)  # Changed to PositiveIntegerField
-    created_date = models.DateTimeField(auto_now_add=True)  # Added creation date
+    points = models.PositiveIntegerField(default=0)
+    created_date = models.DateTimeField(auto_now_add=True)
     completed_date = models.DateField(default=timezone.now)
     verification_status = models.BooleanField(default=False)
 
     class Meta:
         verbose_name_plural = 'Activities'
-        ordering = ['-completed_date']
+        ordering = ['-completed_date', '-created_date']
 
     def __str__(self):
         return f"{self.title} ({self.get_activity_type_display()})"
 
-# Removed Student model as it's redundant with CustomUser
+    def clean(self):
+        super().clean()
+        if self.completed_date and self.completed_date > timezone.now().date():
+            raise ValidationError({'completed_date': 'Completion date cannot be in the future.'})
 
 
