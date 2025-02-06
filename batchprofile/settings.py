@@ -68,17 +68,29 @@ WSGI_APPLICATION = 'batchprofile.wsgi.application'
 
 # Database
 DATABASES = {
+
     'default': {
-        **dj_database_url.config(
-            default=os.getenv('DATABASE_URL'),
-            conn_max_age=600,
-            conn_health_checks=True,
-            ssl_require=True
-        ),
+
+        'ENGINE': 'Django.db.backends.postgresql',
+
+        'NAME': 'batchprofile_production',
+
+        'USER': 'batchprofile_production_user',
+
+        'PASSWORD': '6iO4Oyll4useuaaQMqTHcJgxhcBuP0rK',
+
+        'HOST': 'dpg-cufhtsvqrc73fqrc5g-a.oregon-postgres.render.com',  # Corrected host
+
+        'PORT': 5432,  # Explicit port
+
         'OPTIONS': {
-            'sslmode': 'require',  # Changed from verify-full to require
+
+            'sslmode': 'require'  # Mandatory for Render
+
         }
+
     }
+
 }
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
