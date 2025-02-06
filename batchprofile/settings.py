@@ -16,7 +16,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your-default-secret-key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
+
+CSRF_TRUSTED_ORIGINS = ['https://batchprofile.onrender.com']
 
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost').split(',')
 
@@ -68,30 +70,13 @@ WSGI_APPLICATION = 'batchprofile.wsgi.application'
 
 # Database
 DATABASES = {
-
-    'default': {
-
-        'ENGINE': 'django.db.backends.postgresql',
-
-        'NAME': 'batchprofile_production',
-
-        'USER': 'batchprofile_production_user',
-
-        'PASSWORD': '6iO4Oyll4useuaaQMqTHcJgxhcBuP0rK',
-
-        'HOST': 'dpg-cufhtstsvqrc73fqrc5g-a.oregon-postgres.render.com',  # Corrected host
-
-        'PORT': 5432,  # Explicit port
-
-        'OPTIONS': {
-
-            'sslmode': 'require'  # Mandatory for Render
-
-        }
-
-    }
-
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL'),
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
+
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -105,10 +90,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # Security settings
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_HSTS_SECONDS = 3600
+SECURE_SSL_REDIRECT = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+SECURE_HSTS_SECONDS = 0
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 SECURE_BROWSER_XSS_FILTER = True
