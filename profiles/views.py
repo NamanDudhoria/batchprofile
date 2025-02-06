@@ -1,94 +1,74 @@
-# profiles/views.py
-# profiles/views.py
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.db.models import Q
-from .models import CustomUser, Project, PlacementActivity, Domain
-from .forms import ProjectForm, CustomUserCreationForm, ProfileSearchForm
-from django.db.utils import OperationalError
-import logging
-
-logger = logging.getLogger(__name__)
-
-def home(request):
-    return render(request, 'index.html')
-
-def student_detail(request, pk):
-    student = get_object_or_404(CustomUser, pk=pk)
-    skills = student.skills.split(',')
-    context = {
-        'student': student,
-        'skills': [skill.strip() for skill in skills]
-    }
-    return render(request, 'profiles/student_detail.html', context)
+from accounts.models import CustomUser, Project, Activity
+from accounts.forms import CustomUserChangeForm, ProjectForm, ActivityForm
 
 @login_required
-def dashboard(request):
-    user_projects = Project.objects.filter(user=request.user)
-    user_activities = PlacementActivity.objects.filter(user=request.user).order_by('-completed_date')
-
+def profile_view(request, username=None):
+    if username:
+        user = get_object_or_404(CustomUser, username=username)
+        is_own_profile = user == request.user
+    else:
+        user = request.user
+        is_own_profile = True
+    
+    projects = user.projects.all().order_by('-completed_date')
+    activities = user.activities.all().order_by('-completed_date')
+    
     context = {
-        'projects': user_projects,
-        'activities': user_activities,
+        'profile_user': user,
+        'projects': projects,
+        'activities': activities,
+        'is_own_profile': is_own_profile,
     }
-
-    return render(request, 'profiles/dashboard.html', context)
-
+    return render(request, 'profiles/profile.html', context)
 
 @login_required
-def upload_project(request):
+def edit_profile(request):
+    if request.method == 'POST':
+        form = CustomUserChangeForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Profile updated successfully!')
+            return redirect('profile_view')
+    else:
+        form = CustomUserChangeForm(instance=request.user)
+    
+    return render(request, 'profiles/edit_profile.html', {'form': form})
+
+@login_required
+def add_project(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST, request.FILES)
         if form.is_valid():
             project = form.save(commit=False)
             project.user = request.user
             project.save()
-            messages.success(request, 'Project uploaded successfully!')
-            return redirect('dashboard')
+            form.save_m2m()  # Save many-to-many relationships
+            messages.success(request, 'Project added successfully!')
+            return redirect('profile_view')
     else:
         form = ProjectForm()
-    return render(request, 'profiles/upload_project.html', {'form': form})
-
+    
+    return render(request, 'profiles/add_project.html', {'form': form})
 
 @login_required
-def edit_profile(request):
+def add_activity(request):
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST, request.FILES, instance=request.user)
+        form = ActivityForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Profile updated successfully!')
-            return redirect('dashboard')
+            activity = form.save(commit=False)
+            activity.user = request.user
+            activity.save()
+            messages.success(request, 'Activity added successfully!')
+            return redirect('profile_view')
     else:
-        form = CustomUserCreationForm(instance=request.user)
-    return render(request, 'profiles/edit_profile.html', {'form': form})
+        form = ActivityForm()
+    
+    return render(request, 'profiles/add_activity.html', {'form': form})
 
-
-def batch_profile(request):
-    try:
-        form = ProfileSearchForm(request.GET)
-        students = CustomUser.objects.all()
-
-        if form.is_valid():
-            if form.cleaned_data.get('search'):
-                search_query = form.cleaned_data['search']
-                students = students.filter(
-                    Q(first_name__icontains=search_query) |
-                    Q(last_name__icontains=search_query) |
-                    Q(skills__icontains=search_query)
-                )
-
-        return render(request, 'profiles/batch_profile.html', {
-            'students': students,
-            'form': form
-        })
-    except OperationalError as e:
-        # Handle database connection error
-        logger.error(f"Database connection error: {e}")
-        messages.error(request, "Unable to connect to the database. Please try again later.")
-        return render(request, '500.html', status=500)
-    except Exception as e:
-        # Handle other exceptions
-        logger.error(f"Error in batch_profile view: {str(e)}")
-        messages.error(request, "An error occurred while loading profiles. Please try again later.")
-        return render(request, '500.html', status=500)
+@login_required
+def user_list(request):
+    users = CustomUser.objects.all().order_by('username')
+    return render(request, 'profiles/user_list.html', {'users': users})

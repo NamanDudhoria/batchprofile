@@ -3,27 +3,21 @@ from pathlib import Path
 from dotenv import load_dotenv
 import dj_database_url
 
-# Load environment variables from .env file
+# Load environment variables
 load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Build paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'your-default-secret-key')
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your-default-secret-key-for-development')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
+DEBUG = os.getenv('DJANGO_DEBUG', 'True') == 'True'
 
-CSRF_TRUSTED_ORIGINS = ['https://batchprofile.onrender.com']
-
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost').split(',')
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -31,15 +25,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'whitenoise.runserver_nostatic',  # Add whitenoise
-    'profiles',
-    'accounts',
+    
+    # Third party apps
+    'crispy_forms',
+    'crispy_bootstrap5',
+    
+    # Local apps
+    'accounts.apps.AccountsConfig',
+    'profiles.apps.ProfilesConfig',
     'home.apps.HomeConfig',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Add whitenoise middleware
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -77,36 +76,58 @@ DATABASES = {
     )
 }
 
+# Password validation
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
+# Internationalization
+LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'Asia/Kolkata'
+USE_I18N = True
+USE_TZ = True
+
 # Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-
-# Whitenoise settings for serving static files in production
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Media files
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Security settings
-SECURE_SSL_REDIRECT = False
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
-SECURE_HSTS_SECONDS = 0
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
-SECURE_BROWSER_XSS_FILTER = True
-X_FRAME_OPTIONS = 'DENY'
+# Default primary key field type
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email configuration
+# Custom user model
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+# Crispy forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+# Authentication settings
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'
+
+# Email settings (update with your email settings)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
-EMAIL_PORT = os.environ.get('EMAIL_PORT', 587)
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'webmaster@localhost')
-
-# Print DATABASE_URL for debugging
-print(f"DATABASE_URL: {os.getenv('DATABASE_URL')}")
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')

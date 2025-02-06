@@ -1,56 +1,19 @@
-// Common functionality
+// Dismiss alerts automatically after 5 seconds
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize tooltips
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-    });
+    setTimeout(function() {
+        var alerts = document.querySelectorAll('.alert');
+        alerts.forEach(function(alert) {
+            var bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close();
+        });
+    }, 5000);
+});
 
-    // Add smooth scrolling to all links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
+// Add confirmation for delete actions
+document.querySelectorAll('.confirm-delete').forEach(function(element) {
+    element.addEventListener('click', function(e) {
+        if (!confirm('Are you sure you want to delete this item?')) {
             e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
+        }
     });
-
-    // Initialize popovers
-    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-        return new bootstrap.Popover(popoverTriggerEl)
-    });
-
-    // Back to top button
-    var backToTopButton = document.getElementById('backToTop');
-    if (backToTopButton) {
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 300) {
-                backToTopButton.classList.add('show');
-            } else {
-                backToTopButton.classList.remove('show');
-            }
-        });
-
-        backToTopButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    }
-
-    // Navbar shrink on scroll
-    var navbar = document.querySelector('.navbar');
-    if (navbar) {
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 50) {
-                navbar.classList.add('navbar-shrink');
-            } else {
-                navbar.classList.remove('navbar-shrink');
-            }
-        });
-    }
 });

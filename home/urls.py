@@ -1,8 +1,14 @@
 from django.urls import path
 from . import views
+from django.contrib import admin
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('hire-from-us/', views.hire_from_us, name='hire_from_us'),
-    path('batch-profile/', views.batch_profile, name='batch_profile'),  # Example additional URL pattern
-]
+    path('admin/', admin.site.urls),
+    path('', include('home.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('profiles/', include('profiles.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

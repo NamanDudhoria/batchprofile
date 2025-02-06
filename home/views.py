@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from accounts.models import CustomUser, Project, Activity
 
 
 def home(request):

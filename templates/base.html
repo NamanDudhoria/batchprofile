@@ -4,50 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Site{% endblock %}</title>
+    <title>{% block title %}BatchProfile{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    {% block extra_css %}{% endblock %}
 </head>
-<body class="bg-gray-50">
-    <nav class="bg-white shadow-sm py-3">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center">
-                <a href="/" class="text-xl font-bold text-gray-800">IIFT Economics</a>
-                <ul class="flex space-x-4">
-                    <li><a href="/" class="text-gray-600 hover:text-gray-800">Home</a></li>
-                    <li><a href="{% url 'login' %}" class="text-gray-600 hover:text-gray-800">Login</a></li>
-                </ul>
-            </div>
+<body>
+    {% include 'navbar.html' %}
+
+    {% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    </nav>
+        {% endfor %}
+    </div>
+    {% endif %}
 
-    <!-- Main Content -->
-    <main class="py-6">
-        {% block content %}{% endblock %}
-    </main>
+    {% block content %}
+    {% endblock %}
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-4 mt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5>IIFT Economics Department</h5>
-                    <p>Fostering excellence in economic theory and its practical applications.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <h5>Contact Us</h5>
-                    <p>Email: place.maeco@iift.edu<br>Phone: +91 7041398437</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    {% include 'footer.html' %}
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

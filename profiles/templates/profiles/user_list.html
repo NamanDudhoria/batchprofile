@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="mb-0">All Users</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for user in users %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                {% if user.profile_picture %}
+                                    <img src="{{ user.profile_picture.url }}" class="rounded-circle img-fluid mb-3" style="max-width: 100px;">
+                                {% endif %}
+                                <h5>{{ user.username }}</h5>
+                                {% if user.domains.all %}
+                                    <div class="mb-2">
+                                        {% for domain in user.domains.all %}
+                                            <span class="badge bg-primary me-1">{{ domain.name }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <a href="{% url 'profiles:user_profile' user.username %}" class="btn btn-primary btn-sm">View Profile</a>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col">
+                        <p class="text-muted">No users found.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
