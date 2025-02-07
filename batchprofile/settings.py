@@ -15,7 +15,7 @@ SECRET_KEY = 'nt-bc_8alnrzh-)b^su&-k54-iy95(3r1yo^*$^)=d(d5t3a3o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1,batchprofile.onrender.com').split(',')
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1, https://iiftbatchprofile.onrender.com').split(',')
 
 # CSRF settings for Render deployment
 CSRF_TRUSTED_ORIGINS = [
