@@ -4,7 +4,6 @@ from django.contrib import messages
 from accounts.models import CustomUser, Project, Activity
 from accounts.forms import CustomUserChangeForm, ProjectForm, ActivityForm
 
-@login_required
 def profile_view(request, username=None):
     if username:
         user = get_object_or_404(CustomUser, username=username)

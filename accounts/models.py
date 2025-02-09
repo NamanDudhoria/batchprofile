@@ -108,8 +108,8 @@ class Activity(models.Model):
 
     title = models.CharField(max_length=255)
     description = models.TextField()
-    experience_type = models.CharField(max_length=50, choices=EXPERIENCE_TYPE_CHOICES)
-    start_date = models.DateField()
+    experience_type = models.CharField(max_length=50, choices=EXPERIENCE_TYPE_CHOICES, default='other')
+    start_date = models.DateField(default=timezone.now)
     completed_date = models.DateField(null=True, blank=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='activities')
 
