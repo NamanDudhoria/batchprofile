@@ -1,4 +1,4 @@
-# filepath: profiles/templatetags/custom_filters.py
+# filepath: profiles/templatetags/profile_tags.py
 
 from django import template
 
