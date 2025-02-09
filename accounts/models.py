@@ -97,33 +97,23 @@ class Project(models.Model):
             raise ValidationError({'completed_date': 'Completion date cannot be in the future.'})
 
 class Activity(models.Model):
-    ACTIVITY_TYPES = [
-        ('project', 'Project Submission'),
-        ('certification', 'Certification'),
-        ('competition', 'Competition'),
-        ('research', 'Research Paper'),
+    EXPERIENCE_TYPE_CHOICES = [
         ('internship', 'Internship'),
+        ('volunteer', 'Volunteer Work'),
+        ('research', 'Research'),
+        ('course', 'Course'),
+        ('project', 'Project'),
+        ('other', 'Other'),
     ]
 
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    experience_type = models.CharField(max_length=50, choices=EXPERIENCE_TYPE_CHOICES)
+    start_date = models.DateField()
+    completed_date = models.DateField(null=True, blank=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='activities')
-    title = models.CharField(max_length=200)
-    description = models.TextField(max_length=1000)
-    activity_type = models.CharField(max_length=20, choices=ACTIVITY_TYPES)
-    points = models.PositiveIntegerField(default=0)
-    created_date = models.DateTimeField(auto_now_add=True)
-    completed_date = models.DateField(default=timezone.now)
-    verification_status = models.BooleanField(default=False)
-
-    class Meta:
-        verbose_name_plural = 'Activities'
-        ordering = ['-completed_date', '-created_date']
 
     def __str__(self):
-        return f"{self.title} ({self.get_activity_type_display()})"
-
-    def clean(self):
-        super().clean()
-        if self.completed_date and self.completed_date > timezone.now().date():
-            raise ValidationError({'completed_date': 'Completion date cannot be in the future.'})
+        return self.title
 
 

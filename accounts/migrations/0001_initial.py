@@ -9,6 +9,17 @@ import django.utils.timezone
 from django.conf import settings
 from django.db import migrations, models
 
+def add_initial_domains(apps, schema_editor):
+    Domain = apps.get_model('your_app_name', 'Domain')
+    domains = [
+        "Finance",
+        "Research",
+        "Consulting",
+        "Data Science and Analytics",
+        "General"
+    ]
+    for domain in domains:
+        Domain.objects.create(name=domain)
 
 class Migration(migrations.Migration):
 

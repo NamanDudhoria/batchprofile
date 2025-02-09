@@ -3,6 +3,13 @@
 
 {% block title %}Hire From Us - IIFT Economics{% endblock %}
 
+{% block extra_css %}
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- AOS Library CSS -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 <div class="hire-section py-5">
     <div class="container">
@@ -78,38 +85,31 @@
             </div>
         </div>
 
-
-        <!-- Chart Section -->
+        <!-- Chart Sections -->
         <div class="bg-white rounded-lg shadow-lg p-6 mb-12" data-aos="fade-up">
             <h3 class="text-2xl font-semibold text-gray-800 mb-6">Placement Statistics</h3>
             <canvas id="placementChart" width="100" height="50"></canvas>
         </div>
 
-        <!-- Sector Distribution Chart -->
         <div class="bg-white rounded-lg shadow-lg p-6 mb-12" data-aos="fade-up">
             <h3 class="text-2xl font-semibold text-gray-800 mb-6">Sector Distribution</h3>
             <canvas id="sectorChart" width="100" height="50"></canvas>
         </div>
 
-        <!-- Mean CTC Chart -->
         <div class="bg-white rounded-lg shadow-lg p-6 mb-12" data-aos="fade-up">
             <h3 class="text-2xl font-semibold text-gray-800 mb-6">Mean CTC</h3>
             <canvas id="meanCTCChart" width="100" height="50"></canvas>
         </div>
 
-        <!-- Median CTC Chart -->
         <div class="bg-white rounded-lg shadow-lg p-6 mb-12" data-aos="fade-up">
             <h3 class="text-2xl font-semibold text-gray-800 mb-6">Median CTC</h3>
             <canvas id="medianCTCChart" width="100" height="50"></canvas>
         </div>
 
-        <!-- Highest CTC Chart -->
         <div class="bg-white rounded-lg shadow-lg p-6 mb-12" data-aos="fade-up">
             <h3 class="text-2xl font-semibold text-gray-800 mb-6">Highest CTC</h3>
             <canvas id="highestCTCChart" width="100" height="50"></canvas>
         </div>
-    </div>
-</div>
         
         <!-- Contact Form -->
         <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6" data-aos="fade-up">
@@ -124,8 +124,8 @@
                     <input type="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                    <input type="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                    <input type="tel" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
@@ -140,8 +140,13 @@
         </div>
     </div>
 </div>
-
-<script src="{% static 'js/hire-charts.js' %}"></script>
 {% endblock %}
 
-
+{% block extra_js %}
+<!-- AOS Library JS -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Your custom charts JS -->
+<script src="{% static 'js/hire-charts.js' %}"></script>
+{% endblock %}

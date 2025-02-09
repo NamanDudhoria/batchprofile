@@ -130,20 +130,29 @@ class ProjectForm(forms.ModelForm):
         return completed_date
 
 class ActivityForm(forms.ModelForm):
+    ongoing = forms.BooleanField(required=False, label="Ongoing Activity")
     class Meta:
         model = Activity
-        fields = ['title', 'description', 'activity_type', 'completed_date']
+        fields = ['title', 'description', 'experience_type', 'start_date', 'completed_date']
         widgets = {
             'description': forms.Textarea(attrs={'rows': 4}),
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
             'completed_date': forms.DateInput(attrs={'type': 'date'}),
-            'activity_type': forms.Select(attrs={'class': 'form-select'}),
+            'experience_type': forms.Select(choices=Activity.EXPERIENCE_TYPE_CHOICES),
         }
 
-    def clean_completed_date(self):
-        completed_date = self.cleaned_data.get('completed_date')
+    def clean(self):
+        cleaned_data = super().clean()
+        ongoing = cleaned_data.get('ongoing')
+        completed_date = cleaned_data.get('completed_date')
+
+        if not ongoing and not completed_date:
+            raise ValidationError("Please provide a completed date or mark the activity as ongoing.")
+
         if completed_date and completed_date > forms.fields.datetime.date.today():
-            raise ValidationError("Completion date cannot be in the future")
-        return completed_date
+            raise ValidationError("Completion date cannot be in the future.")
+
+        return cleaned_data
 
     def clean_title(self):
         title = self.cleaned_data.get('title')
