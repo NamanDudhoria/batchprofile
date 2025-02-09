@@ -56,11 +56,33 @@ def search_students(request):
     return JsonResponse({'students': list(students.values())})
 
 def batch_profile(request):
-    students = CustomUser.objects.all()
+    # Get all users except superusers
+    users = CustomUser.objects.filter(is_superuser=False).select_related().prefetch_related('domains')
+    
+    # Get all domains for filtering
     domains = Domain.objects.all()
-    current_domain = request.GET.get('domain', '')
-    return render(request, 'profiles/batch_profile.html', {
-        'students': students,
+
+    # Handle domain filtering
+    domain_filter = request.GET.get('domain', '')
+    if domain_filter:
+        users = users.filter(domains__name__icontains=domain_filter)
+
+    # Handle search query
+    search_query = request.GET.get('q', '')
+    if search_query:
+        users = users.filter(
+            Q(username__icontains=search_query) |
+            Q(first_name__icontains=search_query) |
+            Q(last_name__icontains=search_query) |
+            Q(skills__icontains=search_query) |
+            Q(domains__name__icontains=search_query)
+        ).distinct()
+
+    context = {
+        'users': users,
         'domains': domains,
-        'current_domain': current_domain
-    })
+        'current_domain': domain_filter,
+        'search_query': search_query
+    }
+    
+    return render(request, 'profiles/user_list.html', context)

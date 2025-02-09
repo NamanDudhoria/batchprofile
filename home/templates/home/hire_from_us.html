@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hire From Us - IIFT Economics</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen p-6">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-12" data-aos="fade-down">
+                <h1 class="text-4xl font-bold text-gray-800 mb-4">Why Hire From Us?</h1>
+                <div class="w-24 h-1 bg-blue-500 mx-auto"></div>
+            </div>
+
+            <!-- Statistics Section -->
+            <div class="grid md:grid-cols-2 gap-6 mb-12">
+                <!-- Placement Highlights -->
+                <div class="bg-white rounded-lg shadow-lg p-6" data-aos="fade-right">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-6">Placement Highlights</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-4 bg-blue-50 rounded-lg">
+                            <span class="font-medium">Highest Stipend</span>
+                            <span class="text-blue-600 font-bold">1.25 LPM</span>
+                        </div>
+                        <div class="flex justify-between items-center p-4 bg-green-50 rounded-lg">
+                            <span class="font-medium">Mean CTC</span>
+                            <span class="text-green-600 font-bold">13.06 LPA</span>
+                        </div>
+                        <div class="flex justify-between items-center p-4 bg-purple-50 rounded-lg">
+                            <span class="font-medium">Highest CTC</span>
+                            <span class="text-purple-600 font-bold">24 LPA</span>
+                        </div>
+                        <div class="flex justify-between items-center p-4 bg-yellow-50 rounded-lg">
+                            <span class="font-medium">Median CTC</span>
+                            <span class="text-yellow-600 font-bold">13 LPA</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sector Distribution -->
+                <div class="bg-white rounded-lg shadow-lg p-6" data-aos="fade-left">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-6">Sector-wise Distribution</h3>
+                    <div class="h-64">
+                        <canvas id="sectorChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Past Recruiters -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-12" data-aos="fade-up">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Past Recruiters</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                    <img src="/api/placeholder/160/80" alt="American Express" class="h-12 object-contain mx-auto">
+                    <img src="/api/placeholder/160/80" alt="Citi" class="h-12 object-contain mx-auto">
+                    <img src="/api/placeholder/160/80" alt="Deloitte" class="h-12 object-contain mx-auto">
+                    <img src="/api/placeholder/160/80" alt="CRISIL" class="h-12 object-contain mx-auto">
+                    <img src="/api/placeholder/160/80" alt="PWC" class="h-12 object-contain mx-auto">
+                    <img src="/api/placeholder/160/80" alt="KPMG" class="h-12 object-contain mx-auto">
+                </div>
+            </div>
+
+            <!-- Technical Skills -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-12" data-aos="fade-up">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Technical Skills</h3>
+                <div class="grid grid-cols-3 md:grid-cols-6 gap-6">
+                    <img src="/api/placeholder/80/80" alt="Python" class="h-16 object-contain mx-auto">
+                    <img src="/api/placeholder/80/80" alt="R" class="h-16 object-contain mx-auto">
+                    <img src="/api/placeholder/80/80" alt="SQL" class="h-16 object-contain mx-auto">
+                    <img src="/api/placeholder/80/80" alt="STATA" class="h-16 object-contain mx-auto">
+                    <img src="/api/placeholder/80/80" alt="Excel" class="h-16 object-contain mx-auto">
+                    <img src="/api/placeholder/80/80" alt="LaTeX" class="h-16 object-contain mx-auto">
+                </div>
+            </div>
+
+            <!-- CTC Charts -->
+            <div class="grid md:grid-cols-3 gap-6 mb-12">
+                <div class="bg-white rounded-lg shadow-lg p-6" data-aos="fade-up" data-aos-delay="100">
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4">Mean CTC</h4>
+                    <canvas id="meanCTCChart"></canvas>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6" data-aos="fade-up" data-aos-delay="200">
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4">Median CTC</h4>
+                    <canvas id="medianCTCChart"></canvas>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6" data-aos="fade-up" data-aos-delay="300">
+                    <h4 class="text-xl font-semibold text-gray-800 mb-4">Highest CTC</h4>
+                    <canvas id="highestCTCChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6" data-aos="fade-up">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Contact Our Placement Team</h3>
+                <form class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Company Name</label>
+                        <input type="text" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input type="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                        <textarea rows="4" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition-colors">
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Sector Distribution Chart
+        new Chart(document.getElementById('sectorChart'), {
+            type: 'pie',
+            data: {
+                labels: ['Consulting', 'Data Science', 'Research', 'BFSI'],
+                datasets: [{
+                    data: [41.7, 23, 16.7, 16.7],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(251, 191, 36, 0.8)',
+                        'rgba(16, 185, 129, 0.8)',
+                        'rgba(239, 68, 68, 0.8)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // CTC Charts Configuration
+        const ctcChartConfig = (data, label, color) => ({
+            type: 'bar',
+            data: {
+                labels: ['2019-21', '2020-22', '2021-23', '2022-24'],
+                datasets: [{
+                    label,
+                    data,
+                    backgroundColor: color,
+                    borderColor: color.replace('0.2', '1'),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: label.includes('Highest') ? 30 : 15
+                    }
+                }
+            }
+        });
+
+        // Initialize CTC Charts
+        new Chart(document.getElementById('meanCTCChart'), 
+            ctcChartConfig([12, 12.5, 13, 13.6], 'Mean CTC (LPA)', 'rgba(59, 130, 246, 0.2)'));
+
+        new Chart(document.getElementById('medianCTCChart'),
+            ctcChartConfig([11, 11.5, 12, 13], 'Median CTC (LPA)', 'rgba(251, 191, 36, 0.2)'));
+
+        new Chart(document.getElementById('highestCTCChart'),
+            ctcChartConfig([23, 24, 24, 25], 'Highest CTC (LPA)', 'rgba(16, 185, 129, 0.2)'));
+    </script>
+</body>
+</html>
