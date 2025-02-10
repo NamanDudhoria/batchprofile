@@ -50,7 +50,7 @@
         <div class="row align-items-center">
             <div class="col-lg-6 mb-5 mb-lg-0">
                 <div class="position-relative">
-                    <img src="{% static 'images/iift_campus.jpg' %}" alt="IIFT Campus" class="img-fluid rounded-4 shadow-lg w-100" style="max-width: 800px;">
+                    <img src="{% static 'images/iift_campus.jpg' %}" alt="IIFT Campus" class="img-fluid rounded-4 shadow-lg w-100" style="width: 800px; height: 900px; object-fit: cover;"">
                     <div class="experience-badge position-absolute bg-primary text-white p-4 rounded-circle shadow-lg" style="bottom: -30px; right: -30px;">
                         <h3 class="h2 mb-0">60+</h3>
                         <p class="mb-0">Years of<br>Excellence</p>
@@ -126,7 +126,7 @@
     <div class="container">
         <div class="text-center mb-6">
             <span class="text-primary text-uppercase fw-bold mb-3 d-block fs-2">Academic Excellence</span>
-            <h2 class="display-4 fw-bold text-dark">Comprehensive Curriculum</h2>
+            <h2 class="display-4 mb-4">Comprehensive Curriculum</h2>
             <p class="lead text-muted mx-auto" style="max-width: 700px;">
                 Our carefully crafted curriculum blends theoretical foundations with practical applications, preparing students for global economic challenges.
             </p>
@@ -134,7 +134,7 @@
 
         <!-- Core Courses - Stylish Grid Format -->
         <div class="mb-6">
-            <h3 class="h4 fw-bold text-center mb-4">Core Courses</h3>
+            <h4 class="h4 fw-bold text-center mb-4">Core Courses</h4>
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 {% for course in core_courses %}
                 <div class="col">
@@ -373,7 +373,6 @@
 <section class="faculty-section py-7 bg-light">
     <div class="container">
         <div class="text-center mb-6">
-            <span class="text-primary text-uppercase fw-bold mb-3 d-block">Our Team</span>
             <h2 class="display-4 mb-4">Distinguished Faculty</h2>
             <p class="lead text-muted mx-auto" style="max-width: 700px;">
                 Learn from world-renowned economists and researchers with decades of academic and industry experience.
