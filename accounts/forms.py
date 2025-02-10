@@ -133,8 +133,9 @@ class ActivityForm(forms.ModelForm):
     ongoing = forms.BooleanField(required=False, label="Ongoing Activity")
     class Meta:
         model = Activity
-        fields = ['title', 'description', 'experience_type', 'start_date', 'completed_date']
+        fields = ['Company','Position', 'description', 'experience_type', 'start_date', 'completed_date']
         widgets = {
+            'Position': forms.TextInput(attrs={'placeholder': 'e.g. Software Developer'}),
             'description': forms.Textarea(attrs={'rows': 4}),
             'start_date': forms.DateInput(attrs={'type': 'date'}),
             'completed_date': forms.DateInput(attrs={'type': 'date'}),

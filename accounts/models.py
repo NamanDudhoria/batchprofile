@@ -106,7 +106,8 @@ class Activity(models.Model):
         ('other', 'Other'),
     ]
 
-    title = models.CharField(max_length=255)
+    Company = models.CharField(max_length=255)
+    position = models.CharField(max_length=100)
     description = models.TextField()
     experience_type = models.CharField(max_length=50, choices=EXPERIENCE_TYPE_CHOICES, default='other')
     start_date = models.DateField(default=timezone.now)
