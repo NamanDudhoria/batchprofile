@@ -129,13 +129,15 @@ class ProjectForm(forms.ModelForm):
             raise ValidationError("Completion date cannot be in the future")
         return completed_date
 
+ 
+
 class ActivityForm(forms.ModelForm):
     ongoing = forms.BooleanField(required=False, label="Ongoing Activity")
+
     class Meta:
         model = Activity
-        fields = ['Company','Position', 'description', 'experience_type', 'start_date', 'completed_date']
+        fields = ['company', 'position','description', 'experience_type', 'start_date', 'completed_date']
         widgets = {
-            'Position': forms.TextInput(attrs={'placeholder': 'e.g. Software Developer'}),
             'description': forms.Textarea(attrs={'rows': 4}),
             'start_date': forms.DateInput(attrs={'type': 'date'}),
             'completed_date': forms.DateInput(attrs={'type': 'date'}),

@@ -15,9 +15,9 @@ class ActivityAdmin(admin.ModelAdmin):
     date_hierarchy = 'completed_date'
 
 class ActivityAdmin(admin.ModelAdmin):
-    list_display = ('title', 'user', 'experience_type', 'start_date', 'completed_date')
+    list_display = ('company', 'position', 'user', 'experience_type', 'start_date', 'completed_date')
     list_filter = ('experience_type', 'completed_date')
-    search_fields = ('title', 'description', 'user__username')
+    search_fields = ('company', 'position', 'description', 'user__username')
     date_hierarchy = 'completed_date'
 
 admin.site.register(CustomUser, UserAdmin)

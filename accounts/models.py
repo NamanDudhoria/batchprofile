@@ -105,8 +105,8 @@ class Activity(models.Model):
         ('project', 'Project'),
         ('other', 'Other'),
     ]
-
-    Company = models.CharField(max_length=255)
+    
+    company = models.CharField(max_length=255)
     position = models.CharField(max_length=100)
     description = models.TextField()
     experience_type = models.CharField(max_length=50, choices=EXPERIENCE_TYPE_CHOICES, default='other')
@@ -115,6 +115,4 @@ class Activity(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='activities')
 
     def __str__(self):
-        return self.title
-
-
+        return f"{self.experience_type} at {self.company}"
