@@ -119,22 +119,18 @@
                 <div class="card-body">
                     {% for activity in activities %}
                         <div class="activity-item mb-4">
-                            <h5>{{ activity.title }}</h5>
+                            <h5>{{ activity.company }}</h5>
                             <p class="text-muted">
-                                {{ activity.get_activity_type_display }} | 
-                                Completed: {{ activity.completed_date }}
-                                {% if activity.verification_status %}
-                                    <span class="badge bg-success ms-2">Verified</span>
+                                {{ activity.position }} | 
+                                {{ activity.start_date }} - 
+                                {% if activity.completed_date %}
+                                    {{ activity.completed_date }}
+                                {% else %}
+                                    Present
                                 {% endif %}
                             </p>
                             <p>{{ activity.description }}</p>
-                            {% if activity.points %}
-                                <span class="badge bg-info">Points: {{ activity.points }}</span>
-                            {% endif %}
                         </div>
-                        {% if not forloop.last %}<hr>{% endif %}
-                    {% empty %}
-                        <p class="text-muted">No Experience added yet.</p>
                     {% endfor %}
                 </div>
             </div>
