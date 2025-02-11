@@ -103,6 +103,8 @@ class Activity(models.Model):
         ('research', 'Research'),
         ('course', 'Course'),
         ('project', 'Project'),
+        ('work','Job'),
+        ('freelance', 'Freelance Work'),
         ('other', 'Other'),
     ]
     
