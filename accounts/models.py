@@ -30,7 +30,7 @@ class CustomUser(AbstractUser):
     bio = models.TextField(blank=True, null=True, max_length=500)
     skills = models.TextField(blank=True, null=True)
     domains = models.ManyToManyField(Domain, related_name='users', blank=True)
-    resume = CloudinaryField('file', blank=True, null=True)
+    resume = CloudinaryField('image', blank=True, null=True)
     linkedin_url = models.URLField(max_length=200, blank=True, null=True, validators=[URLValidator()])
     github_url = models.URLField(max_length=200, blank=True, null=True, validators=[URLValidator()])
     hackerrank_url = models.URLField(max_length=200, blank=True, null=True, validators=[URLValidator()])
