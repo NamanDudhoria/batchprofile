@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 from django.core.validators import FileExtensionValidator, URLValidator, MinValueValidator
 from django.core.exceptions import ValidationError
+from cloudinary.models import CloudinaryField
 
 def validate_file_size(value):
     filesize = value.size
@@ -13,7 +14,7 @@ def validate_image_size(value):
     filesize = value.size
     if filesize > 2*1024*1024:  # 2MB limit
         raise ValidationError("Maximum image size is 2MB")
-
+    
 class Domain(models.Model):
     name = models.CharField(max_length=100, unique=True)
     
@@ -25,27 +26,11 @@ class Domain(models.Model):
         return self.name
 
 class CustomUser(AbstractUser):
-    profile_picture = models.ImageField(
-        upload_to='profile_pictures/', 
-        blank=True, 
-        null=True,
-        validators=[
-            FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png']),
-            validate_image_size
-        ]
-    )
+    profile_picture = CloudinaryField('image', blank=True, null=True)
     bio = models.TextField(blank=True, null=True, max_length=500)
     skills = models.TextField(blank=True, null=True)
     domains = models.ManyToManyField(Domain, related_name='users', blank=True)
-    resume = models.FileField(
-        upload_to='resumes/', 
-        blank=True, 
-        null=True,
-        validators=[
-            FileExtensionValidator(allowed_extensions=['pdf', 'doc', 'docx']),
-            validate_file_size
-        ]
-    )
+    resume = CloudinaryField('file', blank=True, null=True)
     linkedin_url = models.URLField(max_length=200, blank=True, null=True, validators=[URLValidator()])
     github_url = models.URLField(max_length=200, blank=True, null=True, validators=[URLValidator()])
     hackerrank_url = models.URLField(max_length=200, blank=True, null=True, validators=[URLValidator()])
