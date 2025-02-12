@@ -11,7 +11,7 @@ def signup(request):
             user = form.save()
             login(request, user)
             messages.success(request, 'Account created successfully!')
-            return redirect('profiles:profile_view')
+            redirect('profiles:profile_view', username=user.username)
     else:
         form = CustomUserCreationForm()
     return render(request, 'accounts/signup.html', {'form': form})
