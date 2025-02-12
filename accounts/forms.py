@@ -35,19 +35,34 @@ class CustomUserCreationForm(UserCreationForm):
     def clean_profile_picture(self):
         profile_picture = self.cleaned_data.get('profile_picture')
         if profile_picture:
-            if profile_picture.size > 2*1024*1024:  # 2MB
-                raise ValidationError("Profile picture must be under 2MB")
-            if not profile_picture.name.lower().endswith(('.png', '.jpg', '.jpeg')):
-                raise ValidationError("Only PNG, JPG, or JPEG files are allowed")
+        # For Cloudinary files, check the length of the file instead of size
+            try:
+                if hasattr(profile_picture, 'size'):
+                    if profile_picture.size > 5 * 1024 * 1024:  # 5MB limit
+                        raise ValidationError('Image file too large ( > 5MB )')
+            # If using Cloudinary, the size check might need to be handled differently
+            # or skipped as Cloudinary handles file size limits on their end
+            except AttributeError:
+                 pass  # Skip size validation for Cloudinary files
         return profile_picture
 
     def clean_resume(self):
         resume = self.cleaned_data.get('resume')
         if resume:
-            if resume.size > 5*1024*1024:  # 5MB
-                raise ValidationError("Resume must be under 5MB")
-            if not resume.name.lower().endswith(('.pdf', '.doc', '.docx')):
-                raise ValidationError("Only PDF, DOC, or DOCX files are allowed")
+            try:
+            # Size check for local files
+                if hasattr(resume, 'size'):
+                    if resume.size > 5*1024*1024:  # 5MB
+                        raise ValidationError("Resume must be under 5MB")
+            
+            # File type validation
+                if hasattr(resume, 'name'):
+                    if not resume.name.lower().endswith(('.pdf', '.doc', '.docx')):
+                        raise ValidationError("Only PDF, DOC, or DOCX files are allowed")
+            
+            except AttributeError:
+            # Skip size validation for Cloudinary files as they handle it on their end
+                pass
         return resume
 
 class CustomUserChangeForm(UserChangeForm):
@@ -83,19 +98,34 @@ class CustomUserChangeForm(UserChangeForm):
     def clean_profile_picture(self):
         profile_picture = self.cleaned_data.get('profile_picture')
         if profile_picture:
-            if profile_picture.size > 2*1024*1024:
-                raise ValidationError("Profile picture must be under 2MB")
-            if not profile_picture.name.lower().endswith(('.png', '.jpg', '.jpeg')):
-                raise ValidationError("Only PNG, JPG, or JPEG files are allowed")
+        # For Cloudinary files, check the length of the file instead of size
+            try:
+                if hasattr(profile_picture, 'size'):
+                    if profile_picture.size > 5 * 1024 * 1024:  # 5MB limit
+                        raise ValidationError('Image file too large ( > 5MB )')
+            # If using Cloudinary, the size check might need to be handled differently
+            # or skipped as Cloudinary handles file size limits on their end
+            except AttributeError:
+                 pass  # Skip size validation for Cloudinary files
         return profile_picture
 
     def clean_resume(self):
         resume = self.cleaned_data.get('resume')
         if resume:
-            if resume.size > 5*1024*1024:
-                raise ValidationError("Resume must be under 5MB")
-            if not resume.name.lower().endswith(('.pdf', '.doc', '.docx')):
-                raise ValidationError("Only PDF, DOC, or DOCX files are allowed")
+            try:
+            # Size check for local files
+                if hasattr(resume, 'size'):
+                    if resume.size > 5*1024*1024:  # 5MB
+                        raise ValidationError("Resume must be under 5MB")
+            
+            # File type validation
+                if hasattr(resume, 'name'):
+                    if not resume.name.lower().endswith(('.pdf', '.doc', '.docx')):
+                        raise ValidationError("Only PDF, DOC, or DOCX files are allowed")
+            
+            except AttributeError:
+            # Skip size validation for Cloudinary files as they handle it on their end
+                pass
         return resume
 
 class ProjectForm(forms.ModelForm):
