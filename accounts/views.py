@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_protect
 from .forms import CustomUserCreationForm
 
+@csrf_protect  # Add CSRF protection
 def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST, request.FILES)
@@ -11,7 +13,7 @@ def signup(request):
             user = form.save()
             login(request, user)
             messages.success(request, 'Account created successfully!')
-            redirect('profiles:profile_view', username=user.username)
+            return redirect('profiles:profile_view', username=user.username)  # Add return statement
     else:
         form = CustomUserCreationForm()
     return render(request, 'accounts/signup.html', {'form': form})
