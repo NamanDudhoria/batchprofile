@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="{% url 'home:home' %}">BatchProfile</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">YourSite</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -11,7 +11,7 @@
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'profiles:profile_view' %}">Profile</a>
+                    <a class="nav-link" href="{% url 'profiles:profile_view' user.username %}">Profile</a>
                 </li>
                 {% endif %}
             </ul>
@@ -28,7 +28,7 @@
                     <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'accounts:signup' %}">Sign Up</a>
+                    <a class="nav-link" href="{% url 'accounts:signup' %}">Signup</a>
                 </li>
                 {% endif %}
             </ul>
