@@ -57,7 +57,7 @@ class CustomUserCreationForm(UserCreationForm):
             
             # File type validation
                 if hasattr(resume, 'name'):
-                    if not resume.name.lower().endswith(('.pdf', '.doc', '.docx')):
+                    if not resume.name.lower().endswith(('.pdf', '.doc', '.docx', '.jpg')):
                         raise ValidationError("Only PDF, DOC, or DOCX files are allowed")
             
             except AttributeError:
