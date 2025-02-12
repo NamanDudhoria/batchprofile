@@ -35,7 +35,7 @@ class CustomUserCreationForm(UserCreationForm):
     def clean_profile_picture(self):
         profile_picture = self.cleaned_data.get('profile_picture')
         if profile_picture:
-            if profile_picture.size > 2*1024*1024:  # 2MB
+            if profile_picture.file.size > 2*1024*1024:  # 2MB
                 raise ValidationError("Profile picture must be under 2MB")
             if not profile_picture.name.lower().endswith(('.png', '.jpg', '.jpeg')):
                 raise ValidationError("Only PNG, JPG, or JPEG files are allowed")
@@ -44,7 +44,7 @@ class CustomUserCreationForm(UserCreationForm):
     def clean_resume(self):
         resume = self.cleaned_data.get('resume')
         if resume:
-            if resume.size > 5*1024*1024:  # 5MB
+            if resume.file.size > 5*1024*1024:  # 5MB
                 raise ValidationError("Resume must be under 5MB")
             if not resume.name.lower().endswith(('.pdf', '.doc', '.docx')):
                 raise ValidationError("Only PDF, DOC, or DOCX files are allowed")
@@ -83,7 +83,7 @@ class CustomUserChangeForm(UserChangeForm):
     def clean_profile_picture(self):
         profile_picture = self.cleaned_data.get('profile_picture')
         if profile_picture:
-            if profile_picture.size > 2*1024*1024:
+            if profile_picture.file.size > 2*1024*1024:
                 raise ValidationError("Profile picture must be under 2MB")
             if not profile_picture.name.lower().endswith(('.png', '.jpg', '.jpeg')):
                 raise ValidationError("Only PNG, JPG, or JPEG files are allowed")
@@ -92,7 +92,7 @@ class CustomUserChangeForm(UserChangeForm):
     def clean_resume(self):
         resume = self.cleaned_data.get('resume')
         if resume:
-            if resume.size > 5*1024*1024:
+            if resume.file.size > 5*1024*1024:
                 raise ValidationError("Resume must be under 5MB")
             if not resume.name.lower().endswith(('.pdf', '.doc', '.docx')):
                 raise ValidationError("Only PDF, DOC, or DOCX files are allowed")
@@ -117,7 +117,7 @@ class ProjectForm(forms.ModelForm):
     def clean_file(self):
         file = self.cleaned_data.get('file')
         if file:
-            if file.size > 5*1024*1024:
+            if file.file.size > 5*1024*1024:
                 raise ValidationError("File must be under 5MB")
             if not file.name.lower().endswith(('.pdf', '.zip', '.rar', '.doc', '.docx')):
                 raise ValidationError("Only PDF, ZIP, RAR, DOC, or DOCX files are allowed")
