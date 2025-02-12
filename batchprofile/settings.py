@@ -115,26 +115,7 @@ CLOUDINARY_STORAGE = {
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-MEDIA_URL = '/media/' # media files served from cloudinary
-
-
-'''if DEBUG:
-    # Local development settings
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-else:
-    # Production settings for Render
-    # Create a persistent disk in Render and mount it to /opt/render/project/src/media
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = '/opt/render/project/src/media'
-
-    # Ensure media directory exists
-    os.makedirs(MEDIA_ROOT, exist_ok=True)
-    
-    # Set proper permissions
-    import stat
-    os.chmod(MEDIA_ROOT, stat.S_IRWXU | stat.S_IRWXG | stat.S_IROTH | stat.S_IXOTH)'''
-
+MEDIA_URL = '/media/'  # media files served from cloudinary
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
