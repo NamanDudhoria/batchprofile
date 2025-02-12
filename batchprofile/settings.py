@@ -35,11 +35,12 @@ INSTALLED_APPS = [
     # Third party apps
     'crispy_forms',
     'crispy_bootstrap5',
+    'cloudinary_storage',
+    'cloudinary',
     # Local apps
     'accounts.apps.AccountsConfig',
     'profiles.apps.ProfilesConfig',
     'home.apps.HomeConfig',
-    'storages',
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -106,7 +107,18 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-if DEBUG:
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': "dq462nwyf",
+    'API_KEY': "779975784164676",
+    'API_SECRET': "optaEVWt6yFMXqAMyY5nrnYKReM",
+    'SECURE': True
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+MEDIA_URL = '/media/' # media files served from cloudinary
+
+
+'''if DEBUG:
     # Local development settings
     MEDIA_URL = '/media/'
     MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -121,7 +133,7 @@ else:
     
     # Set proper permissions
     import stat
-    os.chmod(MEDIA_ROOT, stat.S_IRWXU | stat.S_IRWXG | stat.S_IROTH | stat.S_IXOTH)
+    os.chmod(MEDIA_ROOT, stat.S_IRWXU | stat.S_IRWXG | stat.S_IROTH | stat.S_IXOTH)'''
 
 
 # Default primary key field type
