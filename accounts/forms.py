@@ -58,7 +58,7 @@ class CustomUserCreationForm(UserCreationForm):
             # File type validation
                 if hasattr(resume, 'name'):
                     if not resume.name.lower().endswith(('.pdf', '.doc', '.docx', '.jpg')):
-                        raise ValidationError("Only PDF, DOC, or DOCX files are allowed")
+                        raise ValidationError("Only jpg files are allowed")
             
             except AttributeError:
             # Skip size validation for Cloudinary files as they handle it on their end
@@ -120,8 +120,8 @@ class CustomUserChangeForm(UserChangeForm):
             
             # File type validation
                 if hasattr(resume, 'name'):
-                    if not resume.name.lower().endswith(('.pdf', '.doc', '.docx')):
-                        raise ValidationError("Only PDF, DOC, or DOCX files are allowed")
+                    if not resume.name.lower().endswith(('.pdf', '.doc', '.docx', '.jpg')):
+                        raise ValidationError("Only jpg are allowed")
             
             except AttributeError:
             # Skip size validation for Cloudinary files as they handle it on their end
@@ -149,7 +149,7 @@ class ProjectForm(forms.ModelForm):
         if file:
             if file.size > 5*1024*1024:
                 raise ValidationError("File must be under 5MB")
-            if not file.name.lower().endswith(('.pdf', '.zip', '.rar', '.doc', '.docx')):
+            if not file.name.lower().endswith(('.pdf', '.zip', '.rar', '.doc', '.docx', '.jpg')):
                 raise ValidationError("Only PDF, ZIP, RAR, DOC, or DOCX files are allowed")
         return file
 
