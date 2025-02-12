@@ -5,12 +5,8 @@ from accounts.models import CustomUser, Project, Activity
 from accounts.forms import CustomUserChangeForm, ProjectForm, ActivityForm
 
 def profile_view(request, username=None):
-    if username:
-        user = get_object_or_404(CustomUser, username=username)
-        is_own_profile = user == request.user
-    else:
-        user = request.user
-        is_own_profile = True
+    user = get_object_or_404(CustomUser, username=username)
+    is_own_profile = user == request.user
     
     projects = user.projects.all().order_by('-completed_date')
     activities = user.activities.all().order_by('-completed_date')
@@ -22,6 +18,7 @@ def profile_view(request, username=None):
         'is_own_profile': is_own_profile,
     }
     return render(request, 'profiles/profile.html', context)
+
 
 @login_required
 def edit_profile(request):
