@@ -9,9 +9,9 @@
             <div class="card">
                 <div class="card-body text-center">
                     {% if profile_user.profile_picture %}
-                        <img src="{{ profile_user.profile_picture.url }}" class="card-img-top rounded-top" style="width: 100px; height: 180px; object-fit: cover;">
+                        <img src="{{ profile_user.profile_picture.url }}" class="card-img-top rounded-top" style="width: 160px; height: 180px; object-fit: cover;">
                     {% else %}
-                        <img src="{% static 'images/default_profile.png' %}" class="card-img-top rounded-top" style="width: 100px; height: 180px; object-fit: cover;">
+                        <img src="{% static 'images/default_profile.png' %}" class="card-img-top rounded-top" style="width: 160px; height: 180px; object-fit: cover;">
                     {% endif %}
                     <h3>{{ profile_user.username }}</h3>
                     <p class="text-muted">{{ profile_user.email }}</p>
