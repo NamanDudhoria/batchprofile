@@ -64,5 +64,5 @@ def add_activity(request):
 
 @login_required
 def user_list(request):
-    users = CustomUser.objects.all().order_by('username')
+    users = CustomUser.objects.all().order_by('date_joined')
     return render(request, 'profiles/user_list.html', {'users': users})
