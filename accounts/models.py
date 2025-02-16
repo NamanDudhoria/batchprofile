@@ -40,7 +40,7 @@ class CustomUser(AbstractUser):
 
     class Meta:
         verbose_name_plural = 'Custom Users'
-        ordering = ['-total_activity_points', 'username']
+        ordering = ['date_joined', 'username']
 
     def __str__(self):
         return self.username
