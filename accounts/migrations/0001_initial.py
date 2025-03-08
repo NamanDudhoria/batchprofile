@@ -16,6 +16,7 @@ def add_initial_domains(apps, schema_editor):
         "Research",
         "Consulting",
         "Data Science and Analytics",
+        "Banking",   
         "General"
     ]
     for domain in domains:
