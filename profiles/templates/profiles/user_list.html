@@ -137,9 +137,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const searchTerm = e.target.value.toLowerCase();
 
         studentCards.forEach(card => {
-            const name = card.dataset.name;
-            const skills = card.dataset.skills;
-            const domains = card.dataset.domain;
+            const name = card.dataset.name.toLowerCase(); // Convert to lowercase
+            const skills = card.dataset.skills.toLowerCase(); // Convert to lowercase
+            const domains = card.dataset.domain.toLowerCase(); // Convert to lowercase
 
             if (name.includes(searchTerm) || 
                 skills.includes(searchTerm) || 
