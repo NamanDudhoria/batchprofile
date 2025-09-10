@@ -4,113 +4,160 @@
 
 {% block content %}
 <!-- Hero Section -->
-<div class="hero-section position-relative text-white" style="height: 100vh; background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url('{% static 'images/hero-background.jpg.jpg' %}'); background-size: cover; background-position: center; background-attachment: fixed;">
-    <div class="container h-100">
+<div class="hero-section position-relative text-white overflow-hidden" style="height: 100vh; background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4)), url('{% static 'images/hero-background.jpg.jpg' %}'); background-size: cover; background-position: center; background-attachment: fixed;">
+    <!-- Animated Background Elements -->
+    <div class="hero-bg-elements">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+    </div>
+    
+    <div class="container h-100 position-relative">
         <div class="row h-100 align-items-center">
             <div class="col-lg-8 animation-fade-in">
-                <img src="{% static 'images/logo.png' %}" alt="IIFT Logo" class="mb-4 animate__animated animate__fadeIn" style="max-width: 200px;">
-                <h1 class="display-2 fw-bold mb-4 animate__animated animate__fadeInUp">Department of Economics</h1>
-                <p class="lead fs-3 mb-5 animate__animated animate__fadeInUp animation-delay-1">Shaping Global Economic Leaders Since 1963</p>
-                <div class="stats-bar bg-white bg-opacity-10 p-4 rounded-3 mb-5 animate__animated animate__fadeInUp animation-delay-2">
-                    <div class="row text-center">
-                        <div class="col-md-4 border-end">
-                            <h3 class="h2 mb-2">8th</h3>
-                            <p class="mb-0">IDEAS-RePEc Ranking</p>
-                        </div>
-                        <div class="col-md-4 border-end">
-                            <h3 class="h2 mb-2">A+</h3>
-                            <p class="mb-0">NAAC Grade</p>
+                <!-- Logo with enhanced styling -->
+                <div class="logo-container mb-4 animate__animated animate__fadeIn">
+                    <img src="{% static 'images/logo.png' %}" alt="IIFT Logo" class="hero-logo" style="max-width: 200px; filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));">
+                </div>
+                
+                <!-- Enhanced heading -->
+                <h1 class="hero-title display-2 fw-bold mb-4 animate__animated animate__fadeInUp">
+                    <span class="gradient-text">Department of Economics</span>
+                </h1>
+                
+                <!-- Enhanced subtitle -->
+                <p class="hero-subtitle lead fs-3 mb-5 animate__animated animate__fadeInUp animation-delay-1">
+                    Shaping Global Economic Leaders Since 1963
+                </p>
+                
+                <!-- Modern stats bar with glassmorphism -->
+                <div class="stats-bar glass-card p-4 rounded-4 mb-5 animate__animated animate__fadeInUp animation-delay-2">
+                    <div class="row text-center g-4">
+                        <div class="col-md-4">
+                            <div class="stat-item">
+                                <div class="stat-number gradient-text">8th</div>
+                                <div class="stat-label">IDEAS-RePEc Ranking</div>
+                            </div>
                         </div>
                         <div class="col-md-4">
-                            <h3 class="h2 mb-2">100%</h3>
-                            <p class="mb-0">Placement Rate</p>
+                            <div class="stat-item">
+                                <div class="stat-number gradient-text">A+</div>
+                                <div class="stat-label">NAAC Grade</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stat-item">
+                                <div class="stat-number gradient-text">100%</div>
+                                <div class="stat-label">Placement Rate</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="d-flex gap-4 animate__animated animate__fadeInUp animation-delay-3">
-                    <a href="{% url 'home:batch_profile' %}" class="btn btn-primary btn-lg">View Batch Profiles</a>
+                
+                <!-- Enhanced CTA buttons -->
+                <div class="cta-buttons d-flex flex-wrap gap-3 animate__animated animate__fadeInUp animation-delay-3">
+                    <a href="{% url 'home:batch_profile' %}" class="btn btn-modern btn-primary btn-lg">
                         <i class="fas fa-users me-2"></i>
+                        View Batch Profiles
                     </a>
-                    <a href="{% url 'home:hire_from_us' %}" class="btn btn-outline-primary btn-lg">Hire From Us</a>
+                    <a href="{% url 'home:hire_from_us' %}" class="btn btn-modern btn-outline-light btn-lg">
                         <i class="fas fa-handshake me-2"></i>
+                        Hire From Us
                     </a>
                 </div>
             </div>
         </div>
     </div>
+    
+    <!-- Enhanced scroll indicator -->
     <div class="scroll-indicator animate__animated animate__fadeInDown animation-delay-4">
-        <div class="mouse"></div>
+        <div class="scroll-mouse">
+            <div class="scroll-wheel"></div>
+        </div>
         <span class="scroll-text">Scroll to explore</span>
     </div>
 </div>
 
 <!-- About Section -->
-<section id="about" class="py-7 position-relative overflow-hidden">
-    <div class="container">
+<section id="about" class="py-7 position-relative overflow-hidden bg-light">
+    <!-- Background Pattern -->
+    <div class="section-bg-pattern"></div>
+    
+    <div class="container position-relative">
         <div class="row align-items-center">
             <div class="col-lg-6 mb-5 mb-lg-0">
-                <div class="position-relative">
-                    <img src="{% static 'images/iift_campus.jpg' %}" alt="IIFT Campus" class="img-fluid rounded-4 shadow-lg w-100" style="width: 800px; height: 900px; object-fit: cover;">
-                    <div class="experience-badge position-absolute bg-primary text-white p-4 rounded-circle shadow-lg" style="bottom: -30px; right: -30px;">
-                        <h3 class="h2 mb-0">60+</h3>
-                        <p class="mb-0">Years of<br>Excellence</p>
+                <div class="image-container position-relative">
+                    <div class="image-wrapper">
+                        <img src="{% static 'images/iift_campus.jpg' %}" alt="IIFT Campus" class="img-fluid rounded-4 shadow-lg w-100 modern-image" style="width: 800px; height: 900px; object-fit: cover;">
+                        <div class="image-overlay"></div>
+                    </div>
+                    <div class="experience-badge position-absolute glass-card p-4 rounded-circle shadow-lg" style="bottom: -30px; right: -30px;">
+                        <div class="badge-content text-center">
+                            <h3 class="h2 mb-0 gradient-text">60+</h3>
+                            <p class="mb-0 small">Years of<br>Excellence</p>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6 ps-lg-5">
-                <span class="text-primary text-uppercase fw-bold mb-3 d-block fs-2">About The Institute</span>
-                <h2 class="display-4 mb-4">Pioneering Excellence in Economics Education</h2>
-                <p class="lead mb-4">IIFT stands as a beacon of academic excellence, fostering innovative research and producing world-class economists who shape global trade policies and economic discourse.</p>
+                <div class="section-header mb-4">
+                    <span class="section-tag text-primary text-uppercase fw-bold mb-3 d-block">About The Institute</span>
+                    <h2 class="section-title display-4 mb-4">
+                        <span class="gradient-text">Pioneering Excellence</span><br>
+                        in Economics Education
+                    </h2>
+                    <p class="section-description lead mb-4">IIFT stands as a beacon of academic excellence, fostering innovative research and producing world-class economists who shape global trade policies and economic discourse.</p>
+                </div>
                 
                 <div class="achievements-grid row g-4 mt-4">
                     <div class="col-md-6">
-                        <div class="achievement-item shadow-sm p-4 rounded-4 bg-light hover-lift">
+                        <div class="achievement-card glass-card p-4 rounded-4 hover-lift">
                             <div class="d-flex align-items-center">
-                                <div class="icon-box bg-primary text-white rounded-circle p-3 me-3">
-                                    <i class="fas fa-award fs-3"></i>
+                                <div class="icon-box gradient-bg text-white rounded-circle p-3 me-3">
+                                    <i class="fas fa-award fs-4"></i>
                                 </div>
                                 <div>
-                                    <h4 class="h5 mb-1">A+ Grade</h4>
-                                    <p class="mb-0 text-muted">NAAC Accredited</p>
+                                    <h4 class="h5 mb-1 fw-bold">A+ Grade</h4>
+                                    <p class="mb-0 text-muted small">NAAC Accredited</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="achievement-item shadow-sm p-4 rounded-4 bg-light hover-lift">
+                        <div class="achievement-card glass-card p-4 rounded-4 hover-lift">
                             <div class="d-flex align-items-center">
-                                <div class="icon-box bg-primary text-white rounded-circle p-3 me-3">
-                                    <i class="fas fa-star fs-3"></i>
+                                <div class="icon-box gradient-bg text-white rounded-circle p-3 me-3">
+                                    <i class="fas fa-star fs-4"></i>
                                 </div>
                                 <div>
-                                    <h4 class="h5 mb-1">Category-1</h4>
-                                    <p class="mb-0 text-muted">UGC/MHRD Status</p>
+                                    <h4 class="h5 mb-1 fw-bold">Category-1</h4>
+                                    <p class="mb-0 text-muted small">UGC/MHRD Status</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="achievement-item shadow-sm p-4 rounded-4 bg-light hover-lift">
+                        <div class="achievement-card glass-card p-4 rounded-4 hover-lift">
                             <div class="d-flex align-items-center">
-                                <div class="icon-box bg-primary text-white rounded-circle p-3 me-3">
-                                    <i class="fas fa-graduation-cap fs-3"></i>
+                                <div class="icon-box gradient-bg text-white rounded-circle p-3 me-3">
+                                    <i class="fas fa-graduation-cap fs-4"></i>
                                 </div>
                                 <div>
-                                    <h4 class="h5 mb-1">MA Economics</h4>
-                                    <p class="mb-0 text-muted">Est. 2018</p>
+                                    <h4 class="h5 mb-1 fw-bold">MA Economics</h4>
+                                    <p class="mb-0 text-muted small">Est. 2018</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="achievement-item shadow-sm p-4 rounded-4 bg-light hover-lift">
+                        <div class="achievement-card glass-card p-4 rounded-4 hover-lift">
                             <div class="d-flex align-items-center">
-                                <div class="icon-box bg-primary text-white rounded-circle p-3 me-3">
-                                    <i class="fas fa-globe fs-3"></i>
+                                <div class="icon-box gradient-bg text-white rounded-circle p-3 me-3">
+                                    <i class="fas fa-globe fs-4"></i>
                                 </div>
                                 <div>
-                                    <h4 class="h5 mb-1">Global Network</h4>
-                                    <p class="mb-0 text-muted">30+ Countries</p>
+                                    <h4 class="h5 mb-1 fw-bold">Global Network</h4>
+                                    <p class="mb-0 text-muted small">30+ Countries</p>
                                 </div>
                             </div>
                         </div>
@@ -560,4 +607,330 @@
         </div>
     </div>
 </section>
+
+<style>
+/* Modern Home Page Enhancements */
+
+/* Gradient Text Effect */
+.gradient-text {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+}
+
+/* Glassmorphism Effect */
+.glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Gradient Background for Icons */
+.gradient-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Modern Button Styles */
+.btn-modern {
+    position: relative;
+    overflow: hidden;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.btn-modern.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.btn-modern.btn-outline-light {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.btn-modern.btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white;
+}
+
+/* Floating Background Elements */
+.hero-bg-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.floating-shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    animation: float 6s ease-in-out infinite;
+}
+
+.shape-1 {
+    width: 80px;
+    height: 80px;
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.shape-2 {
+    width: 120px;
+    height: 120px;
+    top: 60%;
+    right: 15%;
+    animation-delay: 2s;
+}
+
+.shape-3 {
+    width: 60px;
+    height: 60px;
+    bottom: 20%;
+    left: 20%;
+    animation-delay: 4s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+/* Enhanced Stats Bar */
+.stats-bar {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-item {
+    padding: 1rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+/* Enhanced Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 10;
+}
+
+.scroll-mouse {
+    width: 24px;
+    height: 40px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    margin: 0 auto 10px;
+    position: relative;
+}
+
+.scroll-wheel {
+    width: 4px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 2px;
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: scroll 2s infinite;
+}
+
+@keyframes scroll {
+    0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(12px); }
+}
+
+.scroll-text {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    letter-spacing: 1px;
+}
+
+/* Section Enhancements */
+.section-bg-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.section-tag {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.section-tag::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.section-title {
+    line-height: 1.2;
+}
+
+/* Image Enhancements */
+.image-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+}
+
+.modern-image {
+    transition: all 0.3s ease;
+}
+
+.image-wrapper:hover .modern-image {
+    transform: scale(1.05);
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.image-wrapper:hover .image-overlay {
+    opacity: 1;
+}
+
+/* Achievement Cards */
+.achievement-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.achievement-card:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced Hover Effects */
+.hover-lift {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Animation Delays */
+.animation-delay-1 { animation-delay: 0.2s; }
+.animation-delay-2 { animation-delay: 0.4s; }
+.animation-delay-3 { animation-delay: 0.6s; }
+.animation-delay-4 { animation-delay: 0.8s; }
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .btn-modern {
+        font-size: 0.9rem;
+        padding: 0.75rem 1.5rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .cta-buttons .btn {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+}
+</style>
+
 {% endblock %}
