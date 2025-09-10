@@ -27,12 +27,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex gap-4 animate__animated animate__fadeInUp animation-delay-3">
-                    <a href="{% url 'home:batch_profile' %}" class="btn btn-primary btn-lg">View Batch Profiles</a>
-                        <i class="fas fa-users me-2"></i>
+                <div class="d-flex flex-wrap gap-3 animate__animated animate__fadeInUp animation-delay-3">
+                    <a href="{% url 'home:batch_profile' %}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-users me-2"></i>View Batch Profiles
                     </a>
-                    <a href="{% url 'home:hire_from_us' %}" class="btn btn-outline-primary btn-lg">Hire From Us</a>
-                        <i class="fas fa-handshake me-2"></i>
+                    <a href="{% url 'home:hire_from_us' %}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-handshake me-2"></i>Hire From Us
+                    </a>
+                    <a href="{% static 'documents/placement_brochure.pdf' %}" target="_blank" class="btn btn-success btn-lg">
+                        <i class="fas fa-download me-2"></i>Download Brochure
                     </a>
                 </div>
             </div>
@@ -114,6 +117,73 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Placement Brochure Section -->
+<section class="placement-brochure-section py-7 bg-gradient-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <div class="brochure-content">
+                    <span class="text-white text-uppercase fw-bold mb-3 d-block fs-2 opacity-75">For Employers</span>
+                    <h2 class="display-4 mb-4 text-white">Download Our Placement Brochure</h2>
+                    <p class="lead mb-4 opacity-90">
+                        Discover the exceptional talent pool of our Economics graduates. Our comprehensive placement brochure showcases student profiles, academic achievements, and placement statistics.
+                    </p>
+                    <div class="brochure-features row g-3 mb-4">
+                        <div class="col-md-6">
+                            <div class="feature-item d-flex align-items-center">
+                                <i class="fas fa-graduation-cap me-3 fs-4"></i>
+                                <span>Student Profiles & Skills</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-item d-flex align-items-center">
+                                <i class="fas fa-chart-line me-3 fs-4"></i>
+                                <span>Placement Statistics</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-item d-flex align-items-center">
+                                <i class="fas fa-building me-3 fs-4"></i>
+                                <span>Recruiter Testimonials</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="feature-item d-flex align-items-center">
+                                <i class="fas fa-calendar me-3 fs-4"></i>
+                                <span>Recruitment Process</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="brochure-actions">
+                        <a href="{% static 'documents/placement_brochure.pdf' %}" target="_blank" class="btn btn-light btn-lg me-3">
+                            <i class="fas fa-download me-2"></i>Download PDF
+                        </a>
+                        <a href="{% url 'home:hire_from_us' %}" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-handshake me-2"></i>Partner With Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div class="brochure-preview">
+                    <div class="pdf-icon-container">
+                        <i class="fas fa-file-pdf pdf-icon"></i>
+                    </div>
+                    <h4 class="mt-3 mb-2">Placement Brochure 2025</h4>
+                    <p class="opacity-75">Comprehensive guide to our talent pool</p>
+                    <div class="file-info">
+                        <small class="opacity-75">
+                            <i class="fas fa-file me-1"></i>PDF Document
+                            <br>
+                            <i class="fas fa-download me-1"></i>Free Download
+                        </small>
                     </div>
                 </div>
             </div>
@@ -560,4 +630,153 @@
         </div>
     </div>
 </section>
+
+<style>
+/* Placement Brochure Section Styles */
+.placement-brochure-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.placement-brochure-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="90" cy="40" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.brochure-content {
+    position: relative;
+    z-index: 2;
+}
+
+.brochure-features .feature-item {
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
+}
+
+.brochure-features .feature-item:hover {
+    transform: translateX(5px);
+}
+
+.brochure-features .feature-item i {
+    color: rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+.brochure-features .feature-item:hover i {
+    color: white;
+    transform: scale(1.1);
+}
+
+.brochure-actions .btn {
+    border-radius: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.brochure-actions .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.brochure-preview {
+    position: relative;
+    z-index: 2;
+}
+
+.pdf-icon-container {
+    width: 120px;
+    height: 120px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.pdf-icon-container:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.pdf-icon {
+    font-size: 3rem;
+    color: white;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.file-info {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .brochure-actions {
+        text-align: center;
+    }
+    
+    .brochure-actions .btn {
+        display: block;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    
+    .brochure-features .feature-item {
+        margin-bottom: 0.5rem;
+    }
+    
+    .pdf-icon-container {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .pdf-icon {
+        font-size: 2.5rem;
+    }
+}
+
+/* Gradient Background for Hero Buttons */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Enhanced Button Styles */
+.btn-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    border: none;
+    color: white;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #218838 0%, #1ea085 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+}
+</style>
+
 {% endblock %}
