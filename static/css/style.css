@@ -47,6 +47,7 @@ body {
     background-color: #0b5ed7;
     border-color: #0a58ca;
 }
+<<<<<<< HEAD
 
 /* Project and Activity Item Styles */
 .project-item, .activity-item {
@@ -81,3 +82,5 @@ body {
 .confirm-delete:hover {
     transform: scale(1.05);
 }
+=======
+>>>>>>> 7b70513757c298ab07b65d8b7b63bc5c5ae65976

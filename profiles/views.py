@@ -63,6 +63,7 @@ def add_activity(request):
     return render(request, 'profiles/add_activity.html', {'form': form})
 
 @login_required
+<<<<<<< HEAD
 def edit_project(request, project_id):
     project = get_object_or_404(Project, id=project_id, user=request.user)
     if request.method == 'POST':
@@ -107,6 +108,8 @@ def delete_activity(request, activity_id):
     return render(request, 'profiles/delete_activity.html', {'activity': activity})
 
 @login_required
+=======
+>>>>>>> 7b70513757c298ab07b65d8b7b63bc5c5ae65976
 def user_list(request):
     users = CustomUser.objects.all().order_by('date_joined')
     return render(request, 'profiles/user_list.html', {'users': users})

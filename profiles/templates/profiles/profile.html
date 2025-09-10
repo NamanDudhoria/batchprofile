@@ -82,6 +82,7 @@
                 <div class="card-body">
                     {% for project in projects %}
                         <div class="project-item mb-4">
+<<<<<<< HEAD
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <h5 class="mb-0">{{ project.title }}</h5>
                                 {% if is_own_profile %}
@@ -95,6 +96,9 @@
                                     </div>
                                 {% endif %}
                             </div>
+=======
+                            <h5>{{ project.title }}</h5>
+>>>>>>> 7b70513757c298ab07b65d8b7b63bc5c5ae65976
                             <p class="text-muted">
                                 Completed: {{ project.completed_date }}
                                 {% if project.verification_status %}
@@ -109,6 +113,7 @@
                                     {% endfor %}
                                 </div>
                             {% endif %}
+<<<<<<< HEAD
                             <div class="project-actions">
                                 {% if project.project_url %}
                                     <a href="{{ project.project_url }}" target="_blank" class="btn btn-outline-primary btn-sm me-2">
@@ -121,6 +126,11 @@
                                     </a>
                                 {% endif %}
                             </div>
+=======
+                            {% if project.project_url %}
+                                <a href="{{ project.project_url }}" target="_blank" class="btn btn-outline-primary btn-sm">View Project</a>
+                            {% endif %}
+>>>>>>> 7b70513757c298ab07b65d8b7b63bc5c5ae65976
                         </div>
                         {% if not forloop.last %}<hr>{% endif %}
                     {% empty %}
@@ -140,6 +150,7 @@
                 <div class="card-body">
                     {% for activity in activities %}
                         <div class="activity-item mb-4">
+<<<<<<< HEAD
                             <div class="d-flex justify-content-between align-items-start mb-2">
                                 <h5 class="mb-0">{{ activity.company }}</h5>
                                 {% if is_own_profile %}
@@ -155,6 +166,10 @@
                             </div>
                             <p class="text-muted">
                                 <span class="badge bg-info me-2">{{ activity.get_experience_type_display }}</span>
+=======
+                            <h5>{{ activity.company }}</h5>
+                            <p class="text-muted">
+>>>>>>> 7b70513757c298ab07b65d8b7b63bc5c5ae65976
                                 {{ activity.position }} | 
                                 {{ activity.start_date }} - 
                                 {% if activity.completed_date %}
@@ -165,9 +180,12 @@
                             </p>
                             <p>{{ activity.description }}</p>
                         </div>
+<<<<<<< HEAD
                         {% if not forloop.last %}<hr>{% endif %}
                     {% empty %}
                         <p class="text-muted">No activities added yet.</p>
+=======
+>>>>>>> 7b70513757c298ab07b65d8b7b63bc5c5ae65976
                     {% endfor %}
                 </div>
             </div>
