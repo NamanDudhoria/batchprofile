@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load profile_tags %}
+
+{% block title %}Batch Profiles{% endblock %}
+
+{% block content %}
+<div class="batch-profile-container container-fluid mt-4">
+    <!-- Header Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="text-center mb-3">Student Profiles</h1>
+            <p class="text-center text-muted">Explore and connect with students based on their domains and skills</p>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="row mb-4">
+        <div class="col-md-8 mx-auto">
+            <div class="search-bar mb-4">
+                <div class="input-group">
+                    <span class="input-group-text bg-white">
+                        <i class="fas fa-search text-muted"></i>
+                    </span>
+                    <input type="text" 
+                           class="form-control form-control-lg border-start-0" 
+                           id="searchInput"
+                           placeholder="Search by name, skills, or domain...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Cards Grid -->
+    <div class="row g-4" id="studentGrid">
+        {% for user in users %}
+        <div class="col-md-6 col-lg-4 student-card"
+             data-domain="{{ user.domains.all|join:', '|lower }}"
+             data-name="{{ user.username }}"
+             data-skills="{{ user.skills|default:''|lower }}">
+            <div class="card h-100 shadow-sm hover-shadow">
+                <div class="card-body text-center">
+                    {% if user.profile_picture %}
+                        <img src="{{ user.profile_picture.url }}" class="card-img-top rounded-top" style="width: 160px; height: 180px; object-fit: cover;">
+                    {% endif %}
+                    <h3 class="card-title h5 mb-3">{{ user.username }}</h3>
+
+                    {% if user.domains.all %}
+                    <div class="domains-container mb-3">
+                        {% for domain in user.domains.all %}
+                            <span class="badge bg-primary me-1 mb-1">{{ domain.name }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    {% if user.skills %}
+                    <div class="skills-container mb-3">
+                        {% for skill in user.skills|split:"," %}
+                            <span class="badge bg-light text-dark me-1 mb-1">{{ skill.strip }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <a href="{% url 'profiles:user_profile' user.username %}" 
+                       class="btn btn-primary w-100">
+                        View Full Profile <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <div class="empty-state-container p-5">
+                <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                <h3>No Users Found</h3>
+                <p class="text-muted">There are currently no users registered in the system.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Custom Styles -->
+<style>
+.batch-profile-container {
+    padding: 20px;
+}
+
+.search-bar {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-bar .form-control-lg {
+    border-radius: 20px;
+    padding-left: 1rem;
+}
+
+.search-bar .input-group-text {
+    border-radius: 20px 0 0 20px;
+}
+
+.student-card .card {
+    border: none;
+    transition: all 0.3s ease;
+    border-radius: 12px;
+}
+
+.hover-shadow:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+}
+
+.skills-container, .domains-container {
+    min-height: 40px;
+}
+
+.badge {
+    padding: 0.5em 1em;
+    font-weight: normal;
+    border-radius: 12px;
+}
+
+.empty-state-container {
+    background-color: #f8f9fa;
+    border-radius: 12px;
+}
+</style>
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const studentCards = document.querySelectorAll('.student-card');
+
+    searchInput.addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+
+        studentCards.forEach(card => {
+            const name = card.dataset.name.toLowerCase(); // Convert to lowercase
+            const skills = card.dataset.skills.toLowerCase(); // Convert to lowercase
+            const domains = card.dataset.domain.toLowerCase(); // Convert to lowercase
+
+            if (name.includes(searchTerm) || 
+                skills.includes(searchTerm) || 
+                domains.includes(searchTerm)) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
+{% endblock %}
