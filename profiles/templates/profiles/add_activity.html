@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Add Experience{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Add Experience</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="ongoing" name="ongoing" {% if form.ongoing.value %}checked{% endif %}>
+            <label class="form-check-label" for="ongoing">Ongoing </label>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Add Experience</button>
+    </form>
+</div>
+{% endblock %}

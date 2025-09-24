@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Activity - {{ activity.company }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Delete Activity
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <i class="fas fa-warning me-2"></i>
+                        <strong>Warning:</strong> This action cannot be undone. The activity will be permanently deleted.
+                    </div>
+                    
+                    <h5>Activity Details:</h5>
+                    <ul class="list-unstyled">
+                        <li><strong>Company:</strong> {{ activity.company }}</li>
+                        <li><strong>Position:</strong> {{ activity.position }}</li>
+                        <li><strong>Type:</strong> {{ activity.get_experience_type_display }}</li>
+                        <li><strong>Duration:</strong> {{ activity.start_date }} - 
+                            {% if activity.completed_date %}
+                                {{ activity.completed_date }}
+                            {% else %}
+                                Present
+                            {% endif %}
+                        </li>
+                        <li><strong>Description:</strong> {{ activity.description|truncatewords:20 }}</li>
+                    </ul>
+                    
+                    <form method="post" class="mt-4">
+                        {% csrf_token %}
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash me-2"></i>Yes, Delete Activity
+                            </button>
+                            <a href="{% url 'profiles:profile_view' user.username %}" class="btn btn-secondary">
+                                <i class="fas fa-times me-2"></i>Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

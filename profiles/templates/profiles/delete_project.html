@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Project - {{ project.title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Delete Project
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <i class="fas fa-warning me-2"></i>
+                        <strong>Warning:</strong> This action cannot be undone. The project will be permanently deleted.
+                    </div>
+                    
+                    <h5>Project Details:</h5>
+                    <ul class="list-unstyled">
+                        <li><strong>Title:</strong> {{ project.title }}</li>
+                        <li><strong>Description:</strong> {{ project.description|truncatewords:20 }}</li>
+                        <li><strong>Completed:</strong> {{ project.completed_date }}</li>
+                        {% if project.domains.all %}
+                        <li><strong>Domains:</strong> 
+                            {% for domain in project.domains.all %}
+                                <span class="badge bg-secondary me-1">{{ domain.name }}</span>
+                            {% endfor %}
+                        </li>
+                        {% endif %}
+                    </ul>
+                    
+                    <form method="post" class="mt-4">
+                        {% csrf_token %}
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fas fa-trash me-2"></i>Yes, Delete Project
+                            </button>
+                            <a href="{% url 'profiles:profile_view' user.username %}" class="btn btn-secondary">
+                                <i class="fas fa-times me-2"></i>Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

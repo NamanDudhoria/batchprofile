@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- Profile Card -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    {% if profile_user.profile_picture %}
+                        <img src="{{ profile_user.profile_picture.url }}" class="card-img-top rounded-top" style="width: 160px; height: 180px; object-fit: cover;">
+                    {% else %}
+                        <img src="{% static 'images/default_profile.png' %}" class="card-img-top rounded-top" style="width: 160px; height: 180px; object-fit: cover;">
+                    {% endif %}
+                    <h3>{{ profile_user.username }}</h3>
+                    <p class="text-muted">{{ profile_user.email }}</p>
+                    
+                    {% if profile_user.bio %}
+                        <p>{{ profile_user.bio }}</p>
+                    {% endif %}
+
+                    <!-- Skills Section -->
+                    {% if profile_user.skills %}
+                        <div class="mb-3">
+                            <h5>Skills</h5>
+                            <p>{{ profile_user.skills }}</p>
+                        </div>
+                    {% endif %}
+
+                    <!-- Domains Section -->
+                    {% if profile_user.domains.all %}
+                        <div class="mb-3">
+                            <h5>Domains</h5>
+                            {% for domain in profile_user.domains.all %}
+                                <span class="badge bg-primary me-1">{{ domain.name }}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <!-- Resume Section -->
+                    {% if profile_user.resume %}
+                        <div class="mb-3">
+                            <h5>Resume</h5>
+                            <a href="{{ profile_user.resume.url }}" target="_blank" class="btn btn-outline-secondary btn-sm">View Resume</a>
+                        </div>
+                    {% endif %}
+                                        
+                    <!-- Social Links -->
+                    <div class="social-links mt-3">
+                        {% if profile_user.linkedin_url %}
+                            <a href="{{ profile_user.linkedin_url }}" target="_blank" class="btn btn-outline-primary btn-sm me-2">
+                                LinkedIn
+                            </a>
+                        {% endif %}
+                        {% if profile_user.github_url %}
+                            <a href="{{ profile_user.github_url }}" target="_blank" class="btn btn-outline-dark btn-sm me-2">
+                                GitHub
+                            </a>
+                        {% endif %}
+                    </div>
+
+                    {% if is_own_profile %}
+                        <div class="mt-4">
+                            <a href="{% url 'profiles:edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects and Activities -->
+        <div class="col-md-8">
+            <!-- Projects Section -->
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Projects</h4>
+                    {% if is_own_profile %}
+                        <a href="{% url 'profiles:add_project' %}" class="btn btn-primary btn-sm">Add Project</a>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    {% for project in projects %}
+                        <div class="project-item mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="mb-0">{{ project.title }}</h5>
+                                {% if is_own_profile %}
+                                    <div class="btn-group" role="group">
+                                        <a href="{% url 'profiles:edit_project' project.id %}" class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                        <a href="{% url 'profiles:delete_project' project.id %}" class="btn btn-outline-danger btn-sm confirm-delete">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <p class="text-muted">
+                                Completed: {{ project.completed_date }}
+                                {% if project.verification_status %}
+                                    <span class="badge bg-success ms-2">Verified</span>
+                                {% endif %}
+                            </p>
+                            <p>{{ project.description }}</p>
+                            {% if project.domains.all %}
+                                <div class="domains mb-2">
+                                    {% for domain in project.domains.all %}
+                                        <span class="badge bg-secondary me-1">{{ domain.name }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="project-actions">
+                                {% if project.project_url %}
+                                    <a href="{{ project.project_url }}" target="_blank" class="btn btn-outline-primary btn-sm me-2">
+                                        <i class="fas fa-external-link-alt"></i> View Project
+                                    </a>
+                                {% endif %}
+                                {% if project.file %}
+                                    <a href="{{ project.file.url }}" target="_blank" class="btn btn-outline-secondary btn-sm">
+                                        <i class="fas fa-download"></i> Download File
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if not forloop.last %}<hr>{% endif %}
+                    {% empty %}
+                        <p class="text-muted">No projects added yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Experience Section -->
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Experience</h4>
+                    {% if is_own_profile %}
+                        <a href="{% url 'profiles:add_activity' %}" class="btn btn-primary btn-sm">Add Activity</a>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    {% for activity in activities %}
+                        <div class="activity-item mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="mb-0">{{ activity.company }}</h5>
+                                {% if is_own_profile %}
+                                    <div class="btn-group" role="group">
+                                        <a href="{% url 'profiles:edit_activity' activity.id %}" class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                        <a href="{% url 'profiles:delete_activity' activity.id %}" class="btn btn-outline-danger btn-sm confirm-delete">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <p class="text-muted">
+                                <span class="badge bg-info me-2">{{ activity.get_experience_type_display }}</span>
+                                {{ activity.position }} | 
+                                {{ activity.start_date }} - 
+                                {% if activity.completed_date %}
+                                    {{ activity.completed_date }}
+                                {% else %}
+                                    Present
+                                {% endif %}
+                            </p>
+                            <p>{{ activity.description }}</p>
+                        </div>
+                        {% if not forloop.last %}<hr>{% endif %}
+                    {% empty %}
+                        <p class="text-muted">No activities added yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
